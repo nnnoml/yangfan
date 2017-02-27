@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request,Session,URL;
 
 use App\Http\Requests;
 
+
+
 class AdminController extends Controller
 {
-    
+    public function __construct(){
+
+    	if(!Session::has('admin')){
+    		$url = route('login');
+    		header('Location:'.$url);
+    		exit;
+    	}
+    }
+
     public function index(){
-    	return view('login');
+		echo Session::get('admin');
     }
 
     public function show(){
-
     }
 }

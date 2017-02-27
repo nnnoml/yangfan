@@ -33,8 +33,9 @@ $(document).ready(function() {
 
       else{
 
-        $.post("{{URL::to('Login/check')}}",{user_name:user_name,user_password:user_psw,_token:'{{csrf_token()}}'},function(result){
-          if(result==1) window.location.href="{{URL::to('Main')}}";
+        $.post("{{URL::to('login')}}",{user_name:user_name,user_password:user_psw,_token:'{{csrf_token()}}'},function(result){
+          result=jQuery.parseJSON(result);
+          if(result.errorno==0) window.location.href="{{URL::to('/')}}";
           else {alert('账号或密码错误');createCode();}
         });
 

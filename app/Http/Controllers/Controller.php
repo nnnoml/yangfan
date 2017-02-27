@@ -10,4 +10,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function json_return($status,$msg,$info=''){
+    	$data['errorno']=$status;
+    	$data['msg']=$msg;
+    	if(is_array($info)) $data['info']=$info;
+    	return json_encode($data);
+    }
 }

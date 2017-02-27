@@ -27,5 +27,8 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
+	Route::get('/login','AdminLoginController@login')->name('login');
+	Route::post('/login','AdminLoginController@loginCheck');
+
     Route::resource('/','AdminController');
 });
