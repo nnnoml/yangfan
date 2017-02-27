@@ -6,8 +6,6 @@ use Request,Session,URL;
 
 use App\Http\Requests;
 
-
-
 class AdminController extends Controller
 {
     public function __construct(){
