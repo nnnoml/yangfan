@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <title>{{config('app.title')}}</title>
-    <meta name="author" content="DeathGhost"/>
-    <link rel="stylesheet" type="text/css" href="{{config('app.static')}}/css/style.css"/>
+    <meta name="author" content="Charis"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('static/css/style.css')}}"/>
     <!--[if lt IE 9]>
     <script src="js/html5.js"></script>
     <![endif]-->
@@ -14,12 +14,12 @@
 <body>
 <!--header-->
 <header>
-    <h1><img src="{{config('app.static')}}/images/admin_logo.png"/></h1>
+    <h1><img src="{{asset('static/images/admin_logo.png')}}"/></h1>
     <ul class="rt_nav">
-        <li><a href="{{URL::to('Main')}}" class="website_icon">系统首页</a></li>
-        <!--li><a href="#" class="admin_icon">DeathGhost</a></li-->
-        <li><a href="{{URL::to('User')}}" class="set_icon">用户设置</a></li>
-        <li><a href="{{URL::to('Login/loginout')}}" class="quit_icon">安全退出</a></li>
+        <li><a href="{{URL::to('admin')}}" class="website_icon">系统首页</a></li>
+        {{--<li><a href="#" class="admin_icon">DeathGhost</a></li>--}}
+        <li><a href="{{URL::to('admin/auth')}}" class="set_icon">用户设置</a></li>
+        <li><a href="{{URL::to('admin/loginOut')}}" class="quit_icon">安全退出</a></li>
     </ul>
 </header>
 
@@ -28,77 +28,33 @@
     <ul id="left_nav">
         <li>
             <dl>
-                <dt>大转盘</dt>
-                <dd><a href="{{URL::to('Roll/index')}}" @if ($nav == '1-1') class="active" @endif >活动配置</a></dd>
-                <dd><a href="{{URL::to('Roll/config')}}" @if ($nav == '1-2') class="active" @endif >普通奖品池</a></dd>
-                <dd><a href="{{URL::to('Roll/dajiang')}}"  @if ($nav == '1-3') class="active" @endif >行列大奖</a></dd>
-                <dd><a href="{{URL::to('Roll/log')}}" @if ($nav == '1-4') class="active" @endif >日志列表</a></dd>
-                <dd><a href="{{URL::to('Roll/prizelog')}}" @if ($nav == '1-5') class="active" @endif >获奖日志</a></dd>
+                <dt onClick="window.location.href='{{URL::to('admin/conf')}}'">系统设置</dt>
+                {{--<dd><a href="{{URL::to('admin/conf')}}" @if ($nav == '1-1') class="active" @endif >活动配置</a></dd>--}}
+                {{--<dd><a href="{{URL::to('Roll/config')}}" @if ($nav == '1-2') class="active" @endif >普通奖品池</a></dd>--}}
+                {{--<dd><a href="{{URL::to('Roll/dajiang')}}"  @if ($nav == '1-3') class="active" @endif >行列大奖</a></dd>--}}
+                {{--<dd><a href="{{URL::to('Roll/log')}}" @if ($nav == '1-4') class="active" @endif >日志列表</a></dd>--}}
+                {{--<dd><a href="{{URL::to('Roll/prizelog')}}" @if ($nav == '1-5') class="active" @endif >获奖日志</a></dd>--}}
             </dl>
         </li>
-
         <li>
             <dl>
-                <dt>塔罗牌</dt>
-                <dd><a href="{{URL::to('Tarot/index')}}" @if ($nav == '2-1')  class="active" @endif >活动配置</a></dd>
-                <dd><a href="{{URL::to('Tarot/property')}}"  @if ($nav == '2-2') class="active" @endif >奖品池</a></dd>
-                <dd><a href="{{URL::to('Tarot/user')}}" @if ($nav == '2-3') class="active" @endif >用户列表</a></dd>
-                <dd><a href="{{URL::to('Tarot/log')}}" @if ($nav == '2-4') class="active" @endif >日志列表</a></dd>
-                <dd><a href="{{URL::to('Tarot/prizelog')}}"  @if ($nav == '2-5') class="active" @endif >获奖日志</a></dd>
-                <dd><a href="{{URL::to('Tarot/itemaward')}}"  @if ($nav == '2-6') class="active" @endif >游戏背包</a></dd>
+                <dt>店铺管理</dt>
+                <dd><a href="{{URL::to('admin/sellshop')}}" @if ($nav == '2-1') class="active" @endif >销售商铺管理</a></dd>
+                <dd><a href="{{URL::to('admin/buyshop')}}" @if ($nav == '2-2') class="active" @endif >购买商铺管理</a></dd>
             </dl>
         </li>
-
         <li>
             <dl>
-                <dt>锻造黄金装</dt>
-                <dd><a href="{{URL::to('Forge/site')}}"  @if ($nav == '3-1') class="active" @endif >活动配置</a></dd>
-                <dd><a href="{{URL::to('Forge/property')}}" @if ($nav == '3-2') class="active"  @endif >奖品池</a></dd>
-                <dd><a href="{{URL::to('Forge/user')}}"  @if ($nav == '3-3') class="active"  @endif >用户列表</a></dd>
-                <dd><a href="{{URL::to('Forge/log')}}" @if ($nav == '3-4')  class="active"  @endif >日志列表</a></dd>
-                <dd><a href="{{URL::to('Forge/prizelog')}}" @if ($nav == '3-5')  class="active" @endif >获奖日志</a></dd>
-                <dd><a href="{{URL::to('Forge/cheat')}}" @if ($nav == '3-6') class="active"  @endif >虚拟抽奖</a></dd>
-                <dd><a href="{{URL::to('Forge/changeproperty')}}" @if ($nav == '3-7') class="active" @endif >下抽必中</a></dd>
+                <dt>销售店铺管理</dt>
+                <dd><a href="{{URL::to('Admin/index')}}" @if ($nav == '1-1') class="active" @endif >活动配置</a></dd>
             </dl>
         </li>
-
         <li>
             <dl>
-                <dt>幸运福袋</dt>
-                <dd><a href="{{URL::to('Bag/site')}}"  @if ($nav == '4-1') class="active" @endif >活动配置</a></dd>
-                <dd><a href="{{URL::to('Bag/bagchance')}}"  @if ($nav == '4-2') class="active" @endif >福袋配置</a></dd>
-                <dd><a href="{{URL::to('Bag/property')}}"  @if ($nav == '4-3') class="active" @endif >奖品配置</a></dd>
-                <dd><a href="{{URL::to('Bag/user')}}"  @if ($nav == '4-4') class="active" @endif >用户列表</a></dd>
-                <dd><a href="{{URL::to('Bag/cheat')}}"  @if ($nav == '4-5') class="active" @endif >虚拟抽奖</a></dd>
-                <dd><a href="{{URL::to('Bag/changepool')}}"  @if ($nav == '4-6') class="active" @endif >下抽必中</a></dd>
-                <dd><a href="{{URL::to('Bag/log')}}"  @if ($nav == '4-7') class="active" @endif >行为日志</a></dd>
-                <dd><a href="{{URL::to('Bag/prizelog')}}"  @if ($nav == '4-8') class="active" @endif >获奖日志</a></dd>
-
+                <dt>购买店铺管理</dt>
+                <dd><a href="{{URL::to('Admin/index')}}" @if ($nav == '1-1') class="active" @endif >活动配置</a></dd>
             </dl>
         </li>
-
-        <li>
-            <dl>
-                <dt>工具类</dt>
-                <dd><a href="{{URL::to('Common/gameaward')}}" @if ($nav == '10-1') class="active" @endif >玩家背包查询</a></dd>
-                <dd><a href="{{URL::to('Common/usercash')}}" @if ($nav == '10-2') class="active" @endif >用户金币查询</a></dd>
-                <dd><a href="{{URL::to('Common/mallselllist')}}" @if ($nav == '10-3') class="active" @endif >商城销售查询</a></dd>
-            </dl>
-        </li>
-
-        <!--li>
-         <dl>
-          <dt>在线统计</dt>
-          <dd><a href="#">流量统计</a></dd>
-          <dd><a href="#">销售额统计</a></dd>
-         </dl>
-        </li>
-        <li>
-         <dl>
-          <dt>在线统计</dt>
-         </dl>
-        </li-->
-
     </ul>
 
 </aside>
@@ -131,8 +87,13 @@
 
 @yield('content')
 
-<script src="{{config('app.static')}}/js/jquery.js"></script>
-<script src="{{config('app.static')}}/js/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="{{config('app.static')}}/js/admin.js"></script>
+<script src="{{asset('static/js/jquery.js')}}"></script>
+<script src="{{asset('static/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+<script src="{{asset('static/js/admin.js')}}"></script>
+
+<link rel="stylesheet" type="text/css" href="{{asset('static/timepicker/css/jquery-ui.css')}}" />
+<script src="{{asset('static/timepicker/js/jquery-ui.js')}}"></script>
+<script src="{{asset('static/timepicker/js/jquery-ui-slide.min.js')}}"></script>
+<script src="{{asset('static/timepicker/js/jquery-ui-timepicker-addon.js')}}"></script>
 
 @yield('footer')

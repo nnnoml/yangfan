@@ -27,8 +27,21 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-	Route::get('/login','AdminLoginController@login')->name('login');
-	Route::post('/login','AdminLoginController@loginCheck');
+	Route::resource('/','AppController');
 
-    Route::resource('/','AdminController');
+	//后台登录相关路由
+	Route::get('/admin/login','AdminLoginController@login')->name('adminLogin');
+	Route::post('/admin/login','AdminLoginController@loginCheck');
+	Route::get('/admin/loginOut','AdminLoginController@loginOut');
+
+	//后台修改用户信息路由
+	Route::resource('/admin/auth','AdminAuthController');
+	//后台配置信息路由
+	Route::resource('/admin/conf','AdminConfigController');
+	//后台销售门店路由
+	Route::resource('/admin/sellshop','AdminSellShopController');
+	//后台购买门店路由
+	Route::resource('/admin/buyshop','AdminBuyShopController');
+
+    Route::resource('/admin','AdminController');
 });

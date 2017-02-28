@@ -13,11 +13,13 @@
              <th>账号</th>
              <th>上次登录时间</th>
              <th>上次登录ip</th>
+             <th>登录次数</th>
             </tr>
             <tr>
-               <td class="center">admin</td>
-               <td class="center"><?php echo date('Y-m-d H:i:s'); ?></td>
-               <td class="center"></td>
+               <td class="center">{{$admin_info->name}}</td>
+               <td class="center">{{$admin_info->updated_at}}</td>
+               <td class="center">{{$admin_info->last_login_ip}}</td>
+               <td class="center">{{$admin_info->login_count}}</td>
             </tr>
            </table>
        </div>
@@ -35,10 +37,6 @@
             <tr>
              <td class="center">操作系统</td>
              <td><?php echo PHP_OS ?></td>
-            </tr>
-            <tr>
-             <td class="center">服务器版本</td>
-             <td></td>
             </tr>
            </table>
        </div>

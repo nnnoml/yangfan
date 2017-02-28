@@ -97,7 +97,7 @@ header .rt_nav li .quit_icon:before{content:"Q";}
 .lt_aside_nav h2 a{display:block;color:#333333;font-size:14px;text-shadow:0 0 2px white;}
 .lt_aside_nav ul{margin-bottom:75px;}
 .lt_aside_nav dl{margin:0;}
-.lt_aside_nav dl dt{font-weight:bold;height:45px;line-height:45px;border-bottom:1px #e9e9e9 solid;padding:0 15px;position:relative;}
+.lt_aside_nav dl dt{font-weight:bold;height:45px;line-height:45px;border-bottom:1px #e9e9e9 solid;padding:0 15px;position:relative; cursor: pointer;}
 .lt_aside_nav dl dt:before{position:absolute;width:5px;height:25px;background:#67c1a5;content:"";top:10px;left:0;}
 .lt_aside_nav dl dd{margin:0;height:0px;line-height:40px;border-bottom:1px #e9e9e9 dotted; display:none;}
 .lt_aside_nav dl dd a{display:block;color:#555555;padding:0 15px;}
