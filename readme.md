@@ -1,2 +1,2 @@
 # yangfan
-EastChinaCmsasdfasdfasdf
+EastChinaCms test
