@@ -94,7 +94,7 @@
             else if(time_limit==1 && end_time<start_time) showAlert('开始时间大于结束时间','','');
             else{
                 $.ajax({
-                    url  : "{{URL::to('admin/sellshop')}}/{{$shop_list->id}}",
+                    url  : "{{URL::to('admin/buyshop')}}/{{$shop_list->id}}",
                     type : "PUT",
                     data : $("#data").serialize()+"&_token={{csrf_token()}}",
                     dataType: "json",
@@ -104,7 +104,7 @@
                     success:function(result){
                         if(result.errorno==0){
                             $(".loading_area").fadeOut(1500);
-                            showAlert(result.msg,'{{URL::to('admin/sellshop')}}','{{URL::to('admin/sellshop')}}');
+                            showAlert(result.msg,'{{URL::to('admin/buyshop')}}','{{URL::to('admin/buyshop')}}');
                         }
                         else {
                             $(".loading_area").fadeOut(1500);

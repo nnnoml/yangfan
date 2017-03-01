@@ -3,38 +3,47 @@
 namespace App\Http\Controllers;
 
 use Request;
+use App\Model\SellGoodModel as SellGood;
 use App\Model\SellShopModel as SellShop;
 
-class AdminSellShopController extends Controller
+class AdminSellGoodController extends Controller
 {
-    public function index()
+    public function show($id)
     {
-        $title="销售商铺列表";
-        $nav='2-1';
         $key=Request::input('key','');
-        $shop_list = SellShop::getAll($key);
+        //找到商品列表
+        $goods_list = SellGood::getAll($id,$key);
+        $title = SellShop::find($id);
+        $title = $title->name."-商品列表";
+
+        $nav = '2-1';
 
         $searchitem = [];
         if($key) $searchitem['key'] = $key;
 
-        return view('Admin.SellShop.index',compact('title','nav','shop_list','key','searchitem'));
+        return view('Admin.SellGood.index',compact('title','nav','key','searchitem','id','goods_list'));
     }
 
     public function create()
     {
-        $title="新增销售店铺";
-        $nav='2-1';
-        return view('Admin.SellShop.add',compact('title','nav'));
+        $id=Request::input('id',0);
+        $title = SellShop::find($id);
+        $title = $title->name."-新增关系";
+        $nav = '2-1';
+
+        return view('Admin.SellGood.add',compact('title','nav','id'));
     }
 
     public function store()
     {
         $data = Request::all();
+        $data['s_id'] = Request::input('id',0);
+        $data['price'] = intval(abs($data['price'])*100);
         unset($data['type']);
         unset($data['_token']);
         unset($data['time_limit']);
 
-        $res = SellShop::updateShop($data);
+        $res = SellGood::updateGood($data);
         if($res){
             echo self::json_return(0,'新增成功');
         }
@@ -44,15 +53,16 @@ class AdminSellShopController extends Controller
 
     public function edit($id)
     {
-        $title="修改销售店铺";
+        $data = SellGood::find($id);
+        $title = $data->name."-修改";
         $nav='2-1';
-        $shop_list = SellShop::getOne($id);
-        return view('Admin.SellShop.edit',compact('title','nav','shop_list'));
+        return view('Admin.SellGood.edit',compact('title','nav','data','id'));
     }
 
     public function update($id)
     {
         $data = Request::all();
+        $data['price'] = intval(abs($data['price'])*100);
         unset($data['type']);
         unset($data['_token']);
         if($data['time_limit']==0){
@@ -61,7 +71,7 @@ class AdminSellShopController extends Controller
         }
         unset($data['time_limit']);
 
-        $res = SellShop::updateShop($data,$id);
+        $res = SellGood::updateGood($data,$id);
         if($res){
             echo self::json_return(0,'修改成功');
         }

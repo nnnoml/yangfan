@@ -4,9 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SellShopModel extends Model
+class BuyShopModel extends Model
 {
-    protected $table = 'sell_shops';
+    protected $table = 'buy_shops';
     public static function getAll($key=''){
         return self::where(function($query) use($key){
             if($key!='') $query->where('name','like','%'.$key.'%');

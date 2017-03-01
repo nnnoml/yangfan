@@ -41,20 +41,17 @@
                 <dt>店铺管理</dt>
                 <dd><a href="{{URL::to('admin/sellshop')}}" @if ($nav == '2-1') class="active" @endif >销售商铺管理</a></dd>
                 <dd><a href="{{URL::to('admin/buyshop')}}" @if ($nav == '2-2') class="active" @endif >购买商铺管理</a></dd>
+                <dd><a href="{{URL::to('admin/relation')}}" @if ($nav == '2-3') class="active" @endif >对应关系</a></dd>
             </dl>
         </li>
+
         <li>
             <dl>
-                <dt>销售店铺管理</dt>
-                <dd><a href="{{URL::to('Admin/index')}}" @if ($nav == '1-1') class="active" @endif >活动配置</a></dd>
+                <dt>用户管理</dt>
+                {{--<dd><a href="{{URL::to('admin/sellshop')}}" @if ($nav == '2-1') class="active" @endif >销售商铺管理</a></dd>--}}
             </dl>
         </li>
-        <li>
-            <dl>
-                <dt>购买店铺管理</dt>
-                <dd><a href="{{URL::to('Admin/index')}}" @if ($nav == '1-1') class="active" @endif >活动配置</a></dd>
-            </dl>
-        </li>
+
     </ul>
 
 </aside>

@@ -15,29 +15,26 @@
             <section>
                 <div class="page_title">
                     <!--h2 class="fl">例如产品详情标题</h2-->
-                    <a class="fr top_rt_btn" onClick="window.location.href='{{URL::to('admin/sellshop/create')}}'">新增店铺</a>
+                    <a class="fr top_rt_btn" onClick="window.location.href='{{URL::to('admin/relation/create')}}'">新增关系</a>
                 </div>
                 <table class="table">
                     <tr>
                         <th>编号</th>
-                        <th>店铺名称</th>
-                        <th>店铺经纬</th>
-                        <th>店铺开始/结束时间</th>
-                        <th>微信分账者</th>
-                        <th>产品管理</th>
+                        <th>购买店铺</th>
+                        <th>销售店铺</th>
+                        <th>是否启用</th>
                         <th>操作</th>
                     </tr>
 
-                    @foreach ($shop_list as $key=>$rs)
+                    @foreach ($data as $key=>$rs)
                         <tr>
                             <td>{{ $rs->id }}</td>
                             <td>{{ $rs->name }}</td>
                             <td>{{ $rs->area }}</td>
                             <td>@if($rs->start_time!=0){{ $rs->start_time }}/{{ $rs->end_time }}@else - @endif</td>
                             <td>{{ $rs->user_wechat }}</td>
-                            <td><a href="{{URL::to('admin/sellgood')}}/{{ $rs->id }}">查看店铺在售商品</a></td>
                             <td>
-                                <a href="{{URL::to('admin/sellshop')}}/{{ $rs->id }}/edit">修改</a>
+                                <a href="{{URL::to('admin/buyshop')}}/{{ $rs->id }}/edit">修改</a>
                                 {{--<a href="javascript:;" onClick='isdelete({{ $rs->id }})'>删除</a>--}}
                             </td>
                         </tr>
@@ -46,7 +43,7 @@
                 </table>
 
                 <aside class="paging">
-                    {!! $shop_list->appends($searchitem)->render() !!}
+                    {!! $data->appends($searchitem)->render() !!}
                 </aside>
             </section>
 
@@ -59,36 +56,9 @@
     <script>
         $("#search").click(function(){
             var key = $("input[name = 'keywords']").val();
-            window.location.href="{{URL::to('admin/sellshop')}}?key="+key;
+            window.location.href="{{URL::to('admin/relation')}}?key="+key;
         })
-        function isdelete(id){
-            var res=confirm("确定删除该店铺？");
-            if(res==true){
-                $.ajax({
-                    url  : "{{URL::to('admin/sellshop')}}",
-                    type : "delete",
-                    data : "id="+id+"&_token={{csrf_token()}}",
-                    dataType: "json",
-                    beforeSend:function(){
-                        $(".loading_area").fadeIn();
-                    },
-                    success:function(result){
-                        if(result==1){
-                            $(".loading_area").fadeOut(1500);
-                            showAlert(result.errorno,'{{URL::to('admin/sellshop')}}','{{URL::to('admin/sellshop')}}');
-                        }
-                        else {
-                            $(".loading_area").fadeOut(1500);
-                            showAlert(result.errorno,'','');
-                        }
-                    }
-
-                })
-
-            }
-        }
     </script>
-
     </body>
     </html>
 @endsection

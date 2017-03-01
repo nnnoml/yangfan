@@ -27,6 +27,7 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
+	//前台路由
 	Route::resource('/','AppController');
 
 	//后台登录相关路由
@@ -40,8 +41,15 @@ Route::group(['middleware' => ['web']], function () {
 	Route::resource('/admin/conf','AdminConfigController');
 	//后台销售门店路由
 	Route::resource('/admin/sellshop','AdminSellShopController');
+		//与销售门店关联的商品路由
+		Route::resource('/admin/sellgood','AdminSellGoodController');
+
 	//后台购买门店路由
 	Route::resource('/admin/buyshop','AdminBuyShopController');
 
+	//后台关系 路由
+	Route::resource('/admin/relation','AdminRelationController');
+
+	//后台主页路由
     Route::resource('/admin','AdminController');
 });
