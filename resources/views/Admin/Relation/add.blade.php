@@ -9,12 +9,18 @@
                     <ul class="ulColumn2">
                         <li>
                             <span class="item_name" style="width:120px;">销售店铺选择：</span>
-                            <input type="text" class="textbox textbox_295" name="ss_id" />
+                            <select name="ss_id">
+                                <option value="0">请选择销售店铺</option>
+                                {!!$sell_shop_option!!}
+                            </select>
                         </li>
 
                         <li>
-                            <span class="item_name" style="width:120px;">销售店铺选择：</span>
-                            <input type="text" class="textbox textbox_295" name="bs_id" />
+                            <span class="item_name" style="width:120px;">购买店铺选择：</span>
+                            <select name="bs_id">
+                                <option value="0">请选择购买店铺</option>
+                                {!!$buy_shop_option!!}
+                            </select>
                         </li>
 
                         <li>

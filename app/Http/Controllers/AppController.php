@@ -9,7 +9,7 @@ use App\Http\Requests;
 class AppController extends Controller
 {
     public function index(){
-        echo QrCode::size(100)->generate('http://www.baidu.com');
-        return view('App.index');
+        $qr =  QrCode::format('png')->size(100)->generate('http://www.nnnoml.com');
+        return view('App.index',compact('qr'));
     }
 }
