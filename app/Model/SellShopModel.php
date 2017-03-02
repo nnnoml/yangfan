@@ -12,9 +12,7 @@ class SellShopModel extends Model
             if($key!='') $query->where('name','like','%'.$key.'%');
         })->paginate(15);
     }
-    public static function getOne($id){
-        return self::find($id);
-    }
+
     public static function updateShop($data,$id=0){
         if($id!=0)
             $shop = self::find($id);

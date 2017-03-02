@@ -43,11 +43,11 @@
 @section('footer')
     <script>
         $(".link_btn").click(function(){
-            var bs_id = $("input[name = 'bs_id']").val();
-            var ss_id = $("input[name = 'ss_id']").val();
+            var bs_id = $("select[name = 'bs_id']").val();
+            var ss_id = $("select[name = 'ss_id']").val();
             var status = $('input:radio[name=status]:checked').val();
 
-            if(bs_id==0 || ss_id==0)  showAlert('未填写完全','','');
+            if(bs_id=='0' || ss_id=='0')  showAlert('未填写完全','','');
             else{
                 $.ajax({
                     url  : "{{URL::to('admin/relation')}}",

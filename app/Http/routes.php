@@ -10,11 +10,8 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
+//微信路由
+Route::any('/wechat', 'WechatController@serve');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -49,6 +46,9 @@ Route::group(['middleware' => ['web']], function () {
 
 	//后台关系 路由
 	Route::resource('/admin/relation','AdminRelationController');
+
+	//后台用户 路由
+	Route::resource('/admin/user','AdminUserController');
 
 	//后台主页路由
     Route::resource('/admin','AdminController');

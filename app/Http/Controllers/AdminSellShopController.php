@@ -46,7 +46,7 @@ class AdminSellShopController extends Controller
     {
         $title="修改销售店铺";
         $nav='2-1';
-        $shop_list = SellShop::getOne($id);
+        $shop_list = SellShop::find($id);
         return view('Admin.SellShop.edit',compact('title','nav','shop_list'));
     }
 

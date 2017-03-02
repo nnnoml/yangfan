@@ -166,7 +166,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
+        //二维码生成
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        //微信sdk
+        Overtrue\LaravelWechat\ServiceProvider::class,
 
     ],
 
@@ -213,7 +216,8 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+        'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
     ],
 
 ];

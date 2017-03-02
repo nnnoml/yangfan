@@ -8,25 +8,20 @@
                 <form id="data">
                     <ul class="ulColumn2">
                         <li>
-                            <span class="item_name" style="width:120px;">销售店铺名称：</span>
-                            <select name="ss_id">
-                                <option value="0">请选择销售店铺</option>
-                                {!!$sell_shop_option!!}
-                            </select>
+                            <span class="item_name" style="width:120px;">用户昵称：</span>
+                            <input type="text" readonly class="textbox " name="nick" value="{{$data->nick}}"/>
                         </li>
 
                         <li>
-                            <span class="item_name" style="width:120px;">购买店铺选择：</span>
-                            <select name="bs_id">
-                                <option value="0">请选择购买店铺</option>
-                                {!!$buy_shop_option!!}
-                            </select>
+                            <span class="item_name" style="width:120px;">用户头像：</span>
+                            <input type="text" readonly class="textbox textbox_295" name="aratar" value="{{$data->avatar}}"/>
+                            <img style="max-width:150px;" src="{{$data->avatar}}" />
                         </li>
 
                         <li>
-                            <span class="item_name" style="width:120px;">是否启用：</span>
-                            <label class="single_selection"><input type="radio" name="status" @if($data->status) checked='true' @endif  value='1'/>启用</label>
-                            <label class="single_selection"><input type="radio" name="status" @if(!$data->status) checked='true' @endif value='0'/>不启用</label>
+                            <span class="item_name" style="width:120px;">是有分账权限：</span>
+                            <label class="single_selection"><input type="radio" name="status" @if($data->status) checked='true' @endif value='1'/>拥有</label>
+                            <label class="single_selection"><input type="radio" name="status" @if(!$data->status) checked='true' @endif value='0'/>未拥有</label>
                         </li>
 
                         <li>
@@ -45,16 +40,12 @@
 
     <script>
         $(".link_btn").click(function(){
-            var bs_id = $("select[name = 'bs_id']").val();
-            var ss_id = $("select[name = 'ss_id']").val();
             var status = $('input:radio[name=status]:checked').val();
 
-            if(bs_id=='0' || ss_id=='0')  showAlert('未填写完全','','');
-            else{
                 $.ajax({
-                    url  : "{{URL::to('admin/relation')}}/{{$data->id}}",
+                    url  : "{{URL::to('admin/user')}}/{{$data->id}}",
                     type : "PUT",
-                    data : $("#data").serialize()+"&_token={{csrf_token()}}",
+                    data : "status="+status+"&_token={{csrf_token()}}",
                     dataType: "json",
                     beforeSend:function(){
                         $(".loading_area").fadeIn();
@@ -62,7 +53,7 @@
                     success:function(result){
                         if(result.errorno==0){
                             $(".loading_area").fadeOut(1500);
-                            showAlert(result.msg,'{{URL::to('admin/relation')}}','{{URL::to('admin/relation')}}');
+                            showAlert(result.msg,'{{URL::to('admin/user')}}','{{URL::to('admin/user')}}');
                         }
                         else {
                             $(".loading_area").fadeOut(1500);
@@ -70,7 +61,6 @@
                         }
                     }
                 })
-            }
         })
     </script>
 

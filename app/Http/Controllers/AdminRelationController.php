@@ -18,7 +18,7 @@ class AdminRelationController extends Controller
         $data = Relation::getAll($key);
 
         foreach($data as $keys=>$vo){
-            $data[$keys]->qrcode =  QrCode::format('png')->size(100)->generate(''.asset('/').$vo->id.'');
+            $data[$keys]->qrcode =  QrCode::format('png')->size(100)->generate(''.asset('/').$vo->qr_id.'');
         }
 
         $searchitem = [];
@@ -51,6 +51,7 @@ class AdminRelationController extends Controller
         $data = Request::all();
         unset($data['type']);
         unset($data['_token']);
+
         $res = Relation::updateRelation($data);
         if($res){
             echo self::json_return(0,'新增成功');

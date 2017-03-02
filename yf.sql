@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 192.168.1.26
--- Generation Time: 2017-03-01 10:40:10
+-- Generation Time: 2017-03-02 12:46:15
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `leee_admin` (
 --
 
 INSERT INTO `leee_admin` (`id`, `name`, `pwd`, `salt`, `last_login_ip`, `login_count`, `created_at`, `updated_at`) VALUES
-(1, 'a', '9e9f9b5b6e02cf22550042effd00526f', '58b50c23523ca', '127.0.0.1', 11, '2017-02-27 09:07:37', '2017-03-01 01:05:35'),
+(1, 'a', '9e9f9b5b6e02cf22550042effd00526f', '58b50c23523ca', '127.0.0.1', 12, '2017-02-27 09:07:37', '2017-03-02 02:39:28'),
 (2, 'admin111111', '593d9b516b0a9045a446cae14d356c39', '58b3ec38552b0', '127.0.0.1', 1, '2017-02-28 02:28:09', '2017-02-28 02:28:09');
 
 -- --------------------------------------------------------
@@ -198,6 +198,7 @@ INSERT INTO `leee_sell_shops` (`id`, `name`, `user_wechat`, `area`, `start_time`
 
 CREATE TABLE IF NOT EXISTS `leee_shops_relation` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `qr_id` varchar(32) NOT NULL COMMENT 'qrcodeid',
   `bs_id` mediumint(8) unsigned NOT NULL COMMENT '购买商铺id',
   `ss_id` mediumint(8) unsigned NOT NULL COMMENT '销售商铺id',
   `sale_id` mediumint(8) unsigned NOT NULL COMMENT '打折策略id',
@@ -205,7 +206,17 @@ CREATE TABLE IF NOT EXISTS `leee_shops_relation` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- 转存表中的数据 `leee_shops_relation`
+--
+
+INSERT INTO `leee_shops_relation` (`id`, `qr_id`, `bs_id`, `ss_id`, `sale_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, '', 1, 5, 0, 1, '2017-03-02 02:40:06', '2017-03-02 02:45:41'),
+(3, '', 1, 2, 0, 0, '2017-03-02 09:39:34', '2017-03-02 09:39:34'),
+(7, '7', 1, 2, 0, 1, '2017-03-02 10:15:07', '2017-03-02 10:15:50'),
+(8, '58b7f0e2a1dc58', 1, 3, 0, 0, '2017-03-02 10:16:02', '2017-03-02 10:16:02');
 
 -- --------------------------------------------------------
 
@@ -217,12 +228,22 @@ CREATE TABLE IF NOT EXISTS `leee_user` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `openid` varchar(50) NOT NULL COMMENT '用户微信openid',
   `nick` varchar(50) NOT NULL COMMENT '用户昵称',
-  `reserve_num` int(10) unsigned NOT NULL COMMENT '预定次数',
-  `reserve_price` int(10) unsigned NOT NULL COMMENT '预定金额',
-  `create_at` timestamp NOT NULL,
-  `update_at` timestamp NOT NULL,
+  `avatar` varchar(255) NOT NULL COMMENT '玩家头像',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '该玩家是否可以分账，默认不可以',
+  `reserve_num` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '预定次数',
+  `reserve_price` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '预定金额',
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `leee_user`
+--
+
+INSERT INTO `leee_user` (`id`, `openid`, `nick`, `avatar`, `status`, `reserve_num`, `reserve_price`, `created_at`, `updated_at`) VALUES
+(1, '12313123sdasafsdf', 'charis', 'http://image.phpcomposer.com/d/1e/768684492400b1470aa7882b29d5c.png', 1, 0, 0, '2017-03-02 03:48:10', '2017-03-02 05:15:18'),
+(2, '12313123sdasafsdf', 'charis', 'http://image.phpcomposer.com/d/1e/768684492400b1470aa7882b29d5c.png', 0, 0, 0, '2017-03-02 03:48:37', '2017-03-02 03:48:37');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

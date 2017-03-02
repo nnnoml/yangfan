@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class ShopRelationModel extends Model
 {
     protected $table = 'shops_relation';
@@ -23,14 +23,35 @@ class ShopRelationModel extends Model
     }
 
     public static function updateRelation($data,$id=0){
-        if($id!=0)
-            $relation = self::find($id);
-        //如果不存在 就新增
-        if(!isset($relation)) $relation = new self;
+        //新增 完毕后根据自增id写一个uuid
+        if($id==0){
+            DB::beginTransaction();
+            $relation = new self;
+            foreach($data as $key=>$vo){
+                $relation->$key = $vo;
+            }
+            $rs1 = $relation->save();
 
-        foreach($data as $key=>$vo){
-            $relation->$key = $vo;
+            $relation_2 = self::find($relation->id);
+            $relation_2->qr_id = uniqid().$relation->id;
+            $rs2 = $relation_2->save();
+
+            if($rs1 && $rs2) {
+                DB::commit();
+                return 1;
+            }
+            else {
+                DB::rollback();
+                return 0;
+            }
+
         }
-        return $relation->save();
+        else{
+            $relation = self::find($id);
+            foreach($data as $key=>$vo){
+                $relation->$key = $vo;
+            }
+            return $relation->save();
+        }
     }
 }

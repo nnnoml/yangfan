@@ -47,8 +47,19 @@
 
         <li>
             <dl>
-                <dt>用户管理</dt>
-                {{--<dd><a href="{{URL::to('admin/sellshop')}}" @if ($nav == '2-1') class="active" @endif >销售商铺管理</a></dd>--}}
+                <dt onClick="window.location.href='{{URL::to('admin/user')}}'">用户管理</dt>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt onClick="window.location.href='{{URL::to('admin/user')}}'">订单日志</dt>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt onClick="window.location.href='{{URL::to('admin/user')}}'">分账流水</dt>
             </dl>
         </li>
 
