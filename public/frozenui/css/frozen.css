@@ -1751,7 +1751,7 @@ h6, .ui-txt-tips {
   width: 100%; }
   .ui-list > li {
     position: relative;
-    margin-left: 15px;
+    padding-left: 15px;
     display: -webkit-box; }
 
 .ui-list-pure > li {
@@ -1777,8 +1777,11 @@ h6, .ui-txt-tips {
 
 .ui-list > li.ui-border-t:first-child,
 .ui-list > li:first-child > .ui-border-t {
-  border: none;
+
   background-image: none; }
+.ui-border-t{
+  border-bottom:1px solid #ccc ;
+}
 
 /*列表缩略图*/
 .ui-list-thumb,

@@ -18,12 +18,15 @@
             </div>
         </section>
 
-        <ul class="ui-grid-halve">
-        <li>
-            <div class="ui-grid-halve-img">
-                <span style="background-image:url(http://placeholder.qiniudn.com/290x160)" class="ui-tag-hot"></span>
-            </div>
-        </li>
+        <ul class="ui-list ui-list-one ui-list-link ui-border-tb ui-list-active">
+            @foreach ($shop_list as $rs)
+            <li class="ui-border-t">
+                <div class="ui-list-info" onclick="window.location.href='{{asset('/')}}dinner/{{$rs->qr_id}}'">
+                    <h4 class="ui-nowrap">{{$rs->name}}</h4>
+                    <div class="ui-txt-info">选择</div>
+                </div>
+            </li>
+            @endforeach
         </ul>
 
     </section>

@@ -22,6 +22,18 @@ class ShopRelationModel extends Model
                     ->paginate(15);
     }
 
+    public static function getIndexList(){
+        return self::leftJoin('buy_shops as bs','bs.id','=','shops_relation.bs_id')
+                    ->where(function ($query){
+                            $query->where('bs.start_time','<',date('H:i:s'))
+                                ->where('bs.end_time','>',date('H:i:s'));
+                    })
+                    //->orwhere('bs,start_time','bs.end_time')
+                    ->where('shops_relation.status',1)
+                    ->select('bs.*','shops_relation.qr_id')
+                    ->get();
+    }
+
     public static function updateRelation($data,$id=0){
         //新增 完毕后根据自增id写一个uuid
         if($id==0){
