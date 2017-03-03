@@ -53,7 +53,7 @@
 
         <li>
             <dl>
-                <dt onClick="window.location.href='{{URL::to('admin/user')}}'">订单日志</dt>
+                <dt onClick="window.location.href='{{URL::to('admin/order')}}'">订单日志</dt>
             </dl>
         </li>
 

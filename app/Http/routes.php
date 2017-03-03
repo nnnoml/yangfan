@@ -24,9 +24,17 @@ Route::any('/wechat', 'WechatController@serve');
 */
 
 Route::group(['middleware' => ['web']], function () {
-	//前台路由
+	/*
+	 * 前台路由
+	 */
 	Route::resource('/','AppController');
+	Route::resource('/dinner','AppDinnerController');
+	Route::resource('/order','AppOrderController');
+	Route::get('/user','AppUserController@index');
 
+	/*
+	 * 后台路由
+	 */
 	//后台登录相关路由
 	Route::get('/admin/login','AdminLoginController@login')->name('adminLogin');
 	Route::post('/admin/login','AdminLoginController@loginCheck');
@@ -49,6 +57,9 @@ Route::group(['middleware' => ['web']], function () {
 
 	//后台用户 路由
 	Route::resource('/admin/user','AdminUserController');
+
+	//后台用户 路由
+	Route::resource('/admin/order','AdminOrderController');
 
 	//后台主页路由
     Route::resource('/admin','AdminController');

@@ -15,13 +15,42 @@
 
 <footer class="ui-footer ui-footer-btn">
     <ul class="ui-tiled ui-border-t">
-        <li data-href="index.html" class="ui-border-r"><i class="ui-icon-hall"></i><div>首页</div></li>
-        <li data-href="js.html"><div><i class="ui-icon-personal"></i>我的订单</div></li>
+        <li data-href="{{asset('/')}}" class="ui-border-r"><i class="ui-icon-hall"></i><div>首页</div></li>
+        <li data-href="{{asset('/')}}user"><div><i class="ui-icon-personal"></i>我的订单</div></li>
     </ul>
 </footer>
 
+
+
 <script src="{{asset('frozenui/js/zepto.min.js')}}"></script>
 <script src="{{asset('frozenui/js/frozen.js')}}"></script>
+<script>
+    $('.ui-tiled li').click(function(){
+        if($(this).data('href')){
+            location.href= $(this).data('href');
+        }
+    });
+    function cls(thi) {
+        $(thi).prev().val('');
+    }
+
+//    (function (){
+//        $("#btn1").tap(function(){
+//
+//
+//            dia.on("dialog:action",function(e){
+//                console.log(e.index)
+//            });
+//            dia.on("dialog:hide",function(e){
+//                console.log("dialog hide")
+//            });
+//        })
+//
+//    })();
+
+
+
+</script>
 @yield('footer')
 </body>
 </html>

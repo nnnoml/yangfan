@@ -18,7 +18,8 @@ class AdminRelationController extends Controller
         $data = Relation::getAll($key);
 
         foreach($data as $keys=>$vo){
-            $data[$keys]->qrcode =  QrCode::format('png')->size(100)->generate(''.asset('/').$vo->qr_id.'');
+            $data[$keys]->qrcode =  QrCode::format('png')->margin(0)->size(100)->errorCorrection('H')->generate(''.asset('/').'dinner/'.$vo->qr_id.'');
+
         }
 
         $searchitem = [];

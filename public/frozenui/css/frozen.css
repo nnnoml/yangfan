@@ -2636,16 +2636,21 @@ h6, .ui-txt-tips {
     -webkit-box-orient: vertical;
     -webkit-box-align: center;
     text-align: center;
-    background: rgba(0, 0, 0, 0.65);
+
     border-radius: 6px;
     color: #fff;
     font-size: 16px; }
+.ui-loading-cnt{
+  background: rgba(0, 0, 0, 0.65);
+}
   .ui-loading-block .ui-loading-bright {
     margin: 18px 0 8px; }
 
 .ui-loading-block.show {
   display: -webkit-box;
-  display: box; }
+  display: box;
+  background: rgba(0, 0, 0, 0.5);
+}
 
 @-webkit-keyframes am-rotate {
   from {
