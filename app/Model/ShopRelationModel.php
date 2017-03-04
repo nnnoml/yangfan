@@ -48,9 +48,9 @@ class ShopRelationModel extends Model
     //前台根据pr获取店铺名称
     public static function getDinnerTitle($qr_id)
     {
-        return self::leftJoin('sell_shops as ss','ss.id','=','shops_relation.ss_id')
+        return self::leftJoin('buy_shops as bs','bs.id','=','shops_relation.bs_id')
             ->where('shops_relation.qr_id',$qr_id)
-            ->select('ss.name')
+            ->select('bs.name')
             ->first();
     }
 

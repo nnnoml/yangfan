@@ -7,14 +7,6 @@ use App\Model\OrderModel as Order;
 
 class AppUserController extends Controller
 {
-    public function __construct()
-    {
-        if(!Session::has('user_id')){
-            header('Location:'.asset('/'));
-            exit;
-        }
-    }
-
     public function index(){
         $title="个人订单";
         $user_order_list = Order::selectOrder(Session::get('user_id'));

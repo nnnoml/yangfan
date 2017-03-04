@@ -10,8 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-//微信路由
-Route::any('/wechat', 'WechatController@serve');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -22,8 +21,10 @@ Route::any('/wechat', 'WechatController@serve');
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+Route::group(['middleware' => ['web', 'wechat.oauth','insert.user']], function () {
 
-Route::group(['middleware' => ['web']], function () {
+	//微信路由
+	Route::any('/wechat', 'WechatController@serve');
 	/*
 	 * 前台路由
 	 */
@@ -31,6 +32,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::resource('/dinner','AppDinnerController');
 	Route::resource('/order','AppOrderController');
 	Route::get('/user','AppUserController@index');
+});
+
+
+Route::group(['middleware' => ['web']], function () {
 
 	/*
 	 * 后台路由

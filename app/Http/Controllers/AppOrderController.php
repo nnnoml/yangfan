@@ -8,14 +8,6 @@ use App\Model\OrderModel as Order;
 
 class AppOrderController extends Controller
 {
-    public function __construct()
-    {
-        if(!Session::has('user_id')){
-            header('Location:'.asset('/'));
-            exit;
-        }
-    }
-
     public function index()
     {
         header('Location:'.asset('/'));

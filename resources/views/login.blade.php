@@ -33,9 +33,9 @@ $(document).ready(function() {
 
       else{
 
-        $.post("{{URL::to('../admin/login')}}",{user_name:user_name,user_password:user_psw,_token:'{{csrf_token()}}'},function(result){
+        $.post("{{asset('/')}}admin/login",{user_name:user_name,user_password:user_psw,_token:'{{csrf_token()}}'},function(result){
           result=jQuery.parseJSON(result);
-          if(result.errorno==0) window.location.href="{{URL::to('../admin')}}";
+          if(result.errorno==0) window.location.href="{{asset('/')}}admin";
           else {alert('账号或密码错误');createCode();}
         });
 

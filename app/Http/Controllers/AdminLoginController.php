@@ -15,7 +15,7 @@ class AdminLoginController extends Controller
 			header('Location:../admin');
 			exit;
 		}
-    	return view('Login');
+		return view('login');
     }
 
     public function loginCheck(){

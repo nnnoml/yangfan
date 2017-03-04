@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Request,Log;
+use Request,Log,Wechat,Session;
 
 class WechatController extends Controller
 {
@@ -17,7 +17,17 @@ class WechatController extends Controller
 
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function($message){
-            return "欢迎关注 overtrue！";
+            if ($message->MsgType == 'event') {
+                switch ($message->Event) {
+                    case 'subscribe':
+                        $text = "欢迎关注～！";
+                }
+
+            }
+            else if ($message->MsgType == 'text'){
+                $text = "<a href='http://nnnoml.com/yangfan/public'>点击订餐</a>";
+            }
+            return $text;
         });
 
         Log::info('return response.');
