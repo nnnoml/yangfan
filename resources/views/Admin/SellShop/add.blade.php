@@ -18,6 +18,14 @@
                         </li>
 
                         <li>
+                            <span class="item_name" style="width:120px;">微信收款用户：</span>
+                            <select name="user_wechat">
+                                <option value="">请选择用户</option>
+                                {!!$shopkeeper_list!!}
+                            </select>
+                        </li>
+
+                        <li>
                             <span class="item_name" style="width:120px;">是否限时：</span>
                             <label class="single_selection"><input type="radio" name="time_limit" value='1'/>限制</label>
                             <label class="single_selection"><input type="radio" name="time_limit" checked='true' value='0'/>不限</label>

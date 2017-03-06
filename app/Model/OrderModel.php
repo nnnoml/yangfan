@@ -27,27 +27,13 @@ class OrderModel extends Model
             ->paginate(15);
     }
 
-    //前台插入订单
+    //前台生成预支付订单，不减库存
     public static function insertOrder($data){
-        $check_qty = SellGood::find($data['g_id']);
-        DB::beginTransaction();
         $order = new self;
         foreach($data as $key=>$vo){
             $order->$key = $vo;
         }
-        $res1 = $order->save();
-        if($check_qty->max_num!=-1)
-            $res2 = SellGood::where('id',$data['g_id'])->where('max_num','>=',$data['order_num'])->decrement('max_num',$data['order_num']);
-        else
-            $res2=1;
-        if($res1 && $res2){
-            DB::commit();
-            return 1;
-        }
-        else {
-            DB::rollBack();
-            return 0;
-        }
+        return $order->save();
     }
     //查询用户三天内订单
     public static function selectOrder($u_id){
@@ -58,5 +44,17 @@ class OrderModel extends Model
                     ->select('order.*','bs.name as bs_name','sg.name as g_name','sg.price')
                     ->orderby('order.created_at','desc')
                     ->get();
+    }
+
+    //处理 减库存，写日志
+
+    //支付成功回调后修改状态 微信通知发货 分账
+    public static function WechatCallBack($data){
+        $check_qty = SellGood::find($data['g_id']);
+        if($check_qty->max_num!=-1)
+            SellGood::where('id',$data['g_id'])->where('max_num','>=',$data['order_num'])->decrement('max_num',$data['order_num']);
+        DB::beginTransaction();
+        DB::commit();
+        DB::rollback();
     }
 }

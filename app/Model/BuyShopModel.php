@@ -8,9 +8,12 @@ class BuyShopModel extends Model
 {
     protected $table = 'buy_shops';
     public static function getAll($key=''){
-        return self::where(function($query) use($key){
-            if($key!='') $query->where('name','like','%'.$key.'%');
-        })->paginate(15);
+        return self::leftJoin('user as u','u.openid','=','buy_shops.user_wechat')
+            ->where(function($query) use($key){
+                if($key!='') $query->where('buy_shops.name','like','%'.$key.'%');
+            })
+            ->select('buy_shops.*','u.nick')
+            ->paginate(15);
     }
     public static function getOne($id){
         return self::find($id);

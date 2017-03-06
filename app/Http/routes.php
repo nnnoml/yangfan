@@ -21,10 +21,12 @@
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-Route::group(['middleware' => ['web', 'wechat.oauth','insert.user']], function () {
+//微信路由
+Route::any('/wechat', 'WechatController@serve');
+Route::any('/sendsms', 'WechatController@sendsms');
 
-	//微信路由
-	Route::any('/wechat', 'WechatController@serve');
+
+Route::group(['middleware' => ['web', 'wechat.oauth','insert.user']], function () {
 	/*
 	 * 前台路由
 	 */

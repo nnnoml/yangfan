@@ -29,21 +29,23 @@
 
                 <div class="ui-form-item ui-border-b">
                     <label>份 数：</label>
+                    <input type="tel" maxlength="3" autocomplete="off"  name="order_num" value="1" placeholder="请输入想购买的份数"/>
+                    <a href="javascript:;" onClick="cls(this)" class="ui-icon-close"></a>
 
-                    <div class="ui-select">
-                        <select name="order_num">
-                            <option value='0'>请选择份数</option>
-                            <option value='1'>1份</option>
-                            <option value='2'>2份</option>
-                            <option value='3'>3份</option>
-                            <option value='4'>4份</option>
-                            <option value='5'>5份</option>
-                            <option value='6'>6份</option>
-                            <option value='7'>7份</option>
-                            <option value='8'>8份</option>
-                            <option value='9'>9份</option>
-                        </select>
-                    </div>
+                    {{--<div class="ui-select">--}}
+                        {{--<select name="order_num">--}}
+                            {{--<option value='0'>请选择份数</option>--}}
+                            {{--<option value='1'>1份</option>--}}
+                            {{--<option value='2'>2份</option>--}}
+                            {{--<option value='3'>3份</option>--}}
+                            {{--<option value='4'>4份</option>--}}
+                            {{--<option value='5'>5份</option>--}}
+                            {{--<option value='6'>6份</option>--}}
+                            {{--<option value='7'>7份</option>--}}
+                            {{--<option value='8'>8份</option>--}}
+                            {{--<option value='9'>9份</option>--}}
+                        {{--</select>--}}
+                    {{--</div>--}}
                 </div>
 
                 <div class="ui-form-item ui-border-b">
@@ -67,10 +69,10 @@
 @section('footer')
     <script>
         $("#submit").click(function () {
-            var order_num = $("select[name = 'order_num']").val();
+            var order_num = parseInt($("input[name = 'order_num']").val());
             var machine_num = $("input[name='machine_num']").val();
             var el;
-            if (order_num == 0) {
+            if (order_num == 0 || isNaN(order_num)) {
                 var dia = $.dialog({
                     title: '请选择份数',
                     button: ["确认"]

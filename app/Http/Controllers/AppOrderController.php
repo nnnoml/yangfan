@@ -28,6 +28,12 @@ class AppOrderController extends Controller
         $data = Request::all();
 
         $goods_info = Good::find($data['id']);
+
+        if($goods_info->max_num!=-1 && $goods_info->max_num<$data['order_num']){
+            echo self::json_return(10011,'失败');
+            exit;
+        }
+
         $relation_info = Relation::where('qr_id',$data['qr'])->first();
 
         $data['order_id']=uniqid().Session::get('user_id').mt_rand(1000,9999);

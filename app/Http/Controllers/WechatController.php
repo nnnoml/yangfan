@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Request,Log,Wechat,Session;
-
+use Request,Log;
+use EasyWeChat\Message\Text;
 class WechatController extends Controller
 {
     /**
@@ -33,5 +33,12 @@ class WechatController extends Controller
         Log::info('return response.');
 
         return $wechat->server->serve();
+    }
+
+    public function sendsms(){
+        $message = new Text(['content' => '卧槽你敢不敢随便回点啥 咋那木呢']);
+        $wechat = app('wechat');
+        $result = $wechat->staff->message($message)->to('ogXult5EMPUMoh-pNtu4VWb8c-9w')->send();
+        dd($result);
     }
 }

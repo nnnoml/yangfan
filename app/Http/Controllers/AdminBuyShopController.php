@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Request;
 use App\Model\BuyShopModel as BuyShop;
-
+use App\Model\UserModel as User;
 class AdminBuyShopController extends Controller
 {
     public function index()
@@ -24,7 +24,12 @@ class AdminBuyShopController extends Controller
     {
         $title="新增购买店铺";
         $nav='2-2';
-        return view('Admin.BuyShop.add',compact('title','nav'));
+        $shopkeeper = User::getShopkeeper();
+        $shopkeeper_list='';
+        foreach($shopkeeper as $vo){
+            $shopkeeper_list .="<option value='{$vo->openid}'>{$vo->nick}({$vo->openid})</option>";
+        }
+        return view('Admin.BuyShop.add',compact('title','nav','shopkeeper_list'));
     }
 
     public function store()
@@ -47,7 +52,16 @@ class AdminBuyShopController extends Controller
         $title="修改购买店铺";
         $nav='2-1';
         $shop_list = BuyShop::getOne($id);
-        return view('Admin.BuyShop.edit',compact('title','nav','shop_list'));
+
+        $shopkeeper = User::getShopkeeper();
+        $shopkeeper_list='';
+        foreach($shopkeeper as $vo){
+            if($vo->openid == $shop_list->	user_wechat) $flag ="selected";
+            else $flag ="";
+            $shopkeeper_list .="<option $flag value='{$vo->openid}'>{$vo->nick}({$vo->openid})</option>";
+        }
+
+        return view('Admin.BuyShop.edit',compact('title','nav','shop_list','shopkeeper_list'));
     }
 
     public function update($id)

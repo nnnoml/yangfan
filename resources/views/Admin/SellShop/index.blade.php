@@ -34,7 +34,7 @@
                             <td>{{ $rs->name }}</td>
                             <td>{{ $rs->area }}</td>
                             <td>@if($rs->start_time!=0){{ $rs->start_time }}/{{ $rs->end_time }}@else - @endif</td>
-                            <td>{{ $rs->user_wechat }}</td>
+                            <td>{{ $rs->nick }}({{ $rs->user_wechat }})</td>
                             <td><a href="{{URL::to('admin/sellgood')}}/{{ $rs->id }}">查看店铺在售商品</a></td>
                             <td>
                                 <a href="{{URL::to('admin/sellshop')}}/{{ $rs->id }}/edit">修改</a>

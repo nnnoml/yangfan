@@ -33,7 +33,7 @@
                             <td>{{ $rs->name }}</td>
                             <td>{{ $rs->area }}</td>
                             <td>@if($rs->start_time!=0){{ $rs->start_time }}/{{ $rs->end_time }}@else - @endif</td>
-                            <td>{{ $rs->user_wechat }}</td>
+                            <td>{{ $rs->nick }}({{ $rs->user_wechat }})</td>
                             <td>
                                 <a href="{{URL::to('admin/buyshop')}}/{{ $rs->id }}/edit">修改</a>
                                 {{--<a href="javascript:;" onClick='isdelete({{ $rs->id }})'>删除</a>--}}

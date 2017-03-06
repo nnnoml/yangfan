@@ -10,7 +10,8 @@ class UserModel extends Model
 
     public static function getAll($key=''){
         return self::where(function($query) use($key){
-            if($key!='') $query->where('name','like','%'.$key.'%');
+            if($key!='') $query->where('nick','like','%'.$key.'%')
+                            ->orwhere('openid',$key);
         })->paginate(15);
     }
 
@@ -26,10 +27,26 @@ class UserModel extends Model
         return $shop->save();
     }
 
+    //拿有分账权限的所有用户
+    public static function getShopkeeper()
+    {
+        return self::where('status',1)->get();
+    }
+
     //微信授权后来查是否存在，不存在新增
     public static function wechatLogin($id,$name,$avatar){
         $is_insert = self::where('openid',$id)->first();
-        if($is_insert) return $is_insert->id;
+        //信息存在 判断是否有更改
+        if($is_insert){
+            if($is_insert->openid!=$id || $is_insert->nick !=$name || $is_insert->avatar !=$avatar){
+                $is_insert->openid=$id;
+                $is_insert->nick=$name;
+                $is_insert->avatar=$avatar;
+                $is_insert->save();
+                return $is_insert->id;
+            }
+            else return $is_insert->id;
+        }
         else{
             $new_user = new self;
             $new_user->openid=$id;

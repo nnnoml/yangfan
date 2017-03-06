@@ -6,7 +6,7 @@
 
             <section>
 
-                <input type="text" name="keywords" class="textbox" placeholder="关键词..." value="{{$key}}"/>
+                <input type="text" name="keywords" class="textbox" placeholder="玩家昵称/玩家openid" value="{{$key}}"/>
                 <input type="button" value="查询" class="group_btn" id="search"/>
                 <input type="button" value="重置" onClick="window.location.href='{{URL::to('admin/user')}}'" class="group_btn"/>
 
@@ -17,6 +17,7 @@
                     <tr>
                         <th>编号</th>
                         <th>用户名称</th>
+                        <th>openid</th>
                         <th>用户头像</th>
                         <th>购买总次数/次</th>
                         <th>购买总金额/元</th>
@@ -28,6 +29,7 @@
                         <tr>
                             <td>{{ $rs->id }}</td>
                             <td>{{ $rs->nick }}</td>
+                            <td>{{ $rs->openid }}</td>
                             <td><img style="max-width:100px;" src ="{{ $rs->avatar }}" /></td>
                             <td>{{ $rs->reserve_num }}</td>
                             <td>{{ $rs->reserve_price/100 }}</td>

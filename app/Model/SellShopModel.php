@@ -8,9 +8,12 @@ class SellShopModel extends Model
 {
     protected $table = 'sell_shops';
     public static function getAll($key=''){
-        return self::where(function($query) use($key){
+        return self::leftJoin('user as u','u.openid','=','sell_shops.user_wechat')
+            ->where(function($query) use($key){
             if($key!='') $query->where('name','like','%'.$key.'%');
-        })->paginate(15);
+            })
+            ->select('sell_shops.*','u.nick')
+            ->paginate(15);
     }
 
     public static function updateShop($data,$id=0){
