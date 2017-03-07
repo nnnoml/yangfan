@@ -45,6 +45,13 @@ class ShopRelationModel extends Model
                 ->get();
     }
 
+    public static function getDinnerInfo($qr_id)
+    {
+        return self::leftJoin('buy_shops as bs','bs.id','=','shops_relation.bs_id')
+            ->where('shops_relation.qr_id',$qr_id)
+            ->first();
+    }
+
     //前台根据pr获取店铺名称
     public static function getDinnerTitle($qr_id)
     {
@@ -81,7 +88,7 @@ class ShopRelationModel extends Model
             $rs1 = $relation->save();
 
             $relation_2 = self::find($relation->id);
-            $relation_2->qr_id = md5(uniqid().$relation->id);
+            $relation_2->qr_id = uniqid().$relation->id;
             $rs2 = $relation_2->save();
 
             if($rs1 && $rs2) {

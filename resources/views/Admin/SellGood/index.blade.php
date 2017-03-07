@@ -23,6 +23,8 @@
                         <th>产品名称</th>
                         <th>产品描述</th>
                         <th>产品价格(元)</th>
+                        <th>销售分成(元)</th>
+                        <th>购买分销分成(元)</th>
                         <th>产品图片</th>
                         <th>每天上限份数</th>
                         <th>上线时间/下线时间</th>
@@ -36,6 +38,8 @@
                             <td>{{ $rs->name }}</td>
                             <td>{{ $rs->desc }}</td>
                             <td>{{ $rs->price/100 }}</td>
+                            <td>{{ $rs->seller_precent/100 }}</td>
+                            <td>{{ $rs->buyer_precent/100 }}</td>
                             <td> <img style="max-width:100px;" src="{{asset('/')}}property/{{$rs->p_id}}.png" /></td>
                             <td>{{ $rs->max_num }}</td>
                             <td>@if($rs->start_time!=0){{ $rs->start_time }}/{{ $rs->end_time }}@else - @endif</td>

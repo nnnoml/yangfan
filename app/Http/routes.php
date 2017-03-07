@@ -23,10 +23,11 @@
 */
 //微信路由
 Route::any('/wechat', 'WechatController@serve');
-Route::any('/sendsms', 'WechatController@sendsms');
+Route::any('/wechatCallBack', 'WechatController@wechatCallBack');
 
 
 Route::group(['middleware' => ['web', 'wechat.oauth','insert.user']], function () {
+//Route::group(['middleware' => ['web']], function () {
 	/*
 	 * 前台路由
 	 */
@@ -34,6 +35,8 @@ Route::group(['middleware' => ['web', 'wechat.oauth','insert.user']], function (
 	Route::resource('/dinner','AppDinnerController');
 	Route::resource('/order','AppOrderController');
 	Route::get('/user','AppUserController@index');
+	Route::get('/account','AppUserController@account');
+	Route::get('/account/detail/{flag}','AppUserController@accountDetail');
 });
 
 
@@ -65,8 +68,14 @@ Route::group(['middleware' => ['web']], function () {
 	//后台用户 路由
 	Route::resource('/admin/user','AdminUserController');
 
-	//后台用户 路由
+	//后台订单 路由
 	Route::resource('/admin/order','AdminOrderController');
+
+	//后台分账 路由
+	Route::resource('/admin/cashflow','AdminCashFlowController');
+
+	//后台提现日志 路由
+	Route::resource('/admin/withdraw','AdminWithdrawController');
 
 	//后台主页路由
     Route::resource('/admin','AdminController');

@@ -16,10 +16,10 @@ return [
     /*
      * 账号基本信息，请从微信公众平台/开放平台获取
      */
-    'app_id'  => 'wx6c9c9fe8c3f53e21',         // AppID
-    'secret'  => '5720263927f2ac30c2bb6c4d37e9df47',     // AppSecret
+    'app_id'  => 'wx0095a618c5b767ae',         // AppID
+    'secret'  => '88546efca545b7b0b52f3276f73446e7',     // AppSecret
     'token'   => 'lla',          // Token
-    'aes_key' => env('WECHAT_AES_KEY', ''),                    // EncodingAESKey
+    'aes_key' => 'UjpdECIl4zPj1daK4R4SPwgmglZyUtraxvaPemF0chp',                    // EncodingAESKey
 
     /**
      * 开放平台第三方平台配置信息
@@ -60,10 +60,10 @@ return [
      * 微信支付
      */
      'payment' => [
-         'merchant_id'        => env('WECHAT_PAYMENT_MERCHANT_ID', 'your-mch-id'),
-         'key'                => env('WECHAT_PAYMENT_KEY', 'key-for-signature'),
-         'cert_path'          => env('WECHAT_PAYMENT_CERT_PATH', 'path/to/your/cert.pem'), // XXX: 绝对路径！！！！
-         'key_path'           => env('WECHAT_PAYMENT_KEY_PATH', 'path/to/your/key'),      // XXX: 绝对路径！！！！
+         'merchant_id'        => '1445129002',
+         'key'                 => 'Yang1fan1shI1Ge1da1Sha1Bi1ha1hA1',
+         'cert_path'          => 'http://nnnoml.com/yangfan/config/apiclient_cert.pem', // XXX: 绝对路径！！！！
+         'key_path'           => 'http://nnnoml.com/yangfan/config/apiclient_key.pem',      // XXX: 绝对路径！！！！
          // 'device_info'     => env('WECHAT_PAYMENT_DEVICE_INFO', ''),
          // 'sub_app_id'      => env('WECHAT_PAYMENT_SUB_APP_ID', ''),
          // 'sub_merchant_id' => env('WECHAT_PAYMENT_SUB_MERCHANT_ID', ''),

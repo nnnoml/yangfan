@@ -12,15 +12,15 @@
                             <input type="text" class="textbox textbox_295" name="title" value="@if(isset($site_config)){{$site_config->title}}@endif"/>
                         </li>
 
-                        <li>
-                            <span class="item_name" style="width:120px;">微信AppID：</span>
-                            <input type="text" class="textbox textbox_295" name="AppID" value="@if(isset($site_config)){{$site_config->AppID}}@endif"/>
-                        </li>
+                        {{--<li>--}}
+                            {{--<span class="item_name" style="width:120px;">微信AppID：</span>--}}
+                            {{--<input type="text" class="textbox textbox_295" name="AppID" value="@if(isset($site_config)){{$site_config->AppID}}@endif"/>--}}
+                        {{--</li>--}}
 
-                        <li>
-                            <span class="item_name" style="width:120px;">微信AppSecret：</span>
-                            <input type="text" class="textbox textbox_295" name="AppSecret" value="@if(isset($site_config)){{$site_config->AppSecret}}@endif"/>
-                        </li>
+                        {{--<li>--}}
+                            {{--<span class="item_name" style="width:120px;">微信AppSecret：</span>--}}
+                            {{--<input type="text" class="textbox textbox_295" name="AppSecret" value="@if(isset($site_config)){{$site_config->AppSecret}}@endif"/>--}}
+                        {{--</li>--}}
 
                         <li>
                             <span class="item_name" style="width:120px;"></span>

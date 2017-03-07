@@ -20,7 +20,7 @@ class WechatController extends Controller
             if ($message->MsgType == 'event') {
                 switch ($message->Event) {
                     case 'subscribe':
-                        $text = "欢迎关注～！";
+                        $text = "欢迎关注～！<a href='http://nnnoml.com/yangfan/public'>点击订餐</a>";
                 }
 
             }
@@ -35,10 +35,40 @@ class WechatController extends Controller
         return $wechat->server->serve();
     }
 
-    public function sendsms(){
-        $message = new Text(['content' => '卧槽你敢不敢随便回点啥 咋那木呢']);
+    public function wechatCallBack(){
         $wechat = app('wechat');
-        $result = $wechat->staff->message($message)->to('ogXult5EMPUMoh-pNtu4VWb8c-9w')->send();
-        dd($result);
+        $response = $wechat->payment->handleNotify(function($notify, $successful){
+            // 你的逻辑
+            return true; // 或者错误消息
+        });
+        return $response;
     }
+
+
+    public function sendNotice($openid,$goods,$order,$area){
+        $message = new Text(['content' => '您有一份新的订单：
+商品名称：'.$goods->name.'
+份数：'.$order->order_num.'份
+总价：'.$order->order_cash.'元
+位置：'.$area.'_'.$order->machine_num.'
+下单时间：
+'.$order->created_at]);
+        $wechat = app('wechat');
+        $result = $wechat->staff->message($message)->to($openid)->send();
+    }
+
+    public function customerNotice($openid,$goods,$order,$area){
+        $message = new Text(['content' => '您的订单：
+商品名称：'.$goods->name.'
+份数：'.$order->order_num.'份
+总价：'.$order->order_cash.'元
+位置：'.$area.'_'.$order->machine_num.'
+下单时间：
+'.$order->created_at.'
+请您稍等片刻，美味即刻送达']);
+        $wechat = app('wechat');
+        $result = $wechat->staff->message($message)->to($openid)->send();
+    }
+
+
 }

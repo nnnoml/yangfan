@@ -17,6 +17,10 @@
     <ul class="ui-tiled ui-border-t">
         <li data-href="{{asset('/')}}" class="ui-border-r"><i class="ui-icon-hall"></i><div>首页</div></li>
         <li data-href="{{asset('/')}}user"><div><i class="ui-icon-personal"></i>我的订单</div></li>
+        @if($user_status)
+        <li data-href="{{asset('/')}}account"><div><i class="ui-icon-set"></i>账户信息</div></li>
+        @endif
+
     </ul>
 </footer>
 
@@ -33,23 +37,6 @@
     function cls(thi) {
         $(thi).prev().val('');
     }
-
-//    (function (){
-//        $("#btn1").tap(function(){
-//
-//
-//            dia.on("dialog:action",function(e){
-//                console.log(e.index)
-//            });
-//            dia.on("dialog:hide",function(e){
-//                console.log("dialog hide")
-//            });
-//        })
-//
-//    })();
-
-
-
 </script>
 @yield('footer')
 </body>

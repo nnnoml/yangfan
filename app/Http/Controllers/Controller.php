@@ -14,7 +14,7 @@ class Controller extends BaseController
     public function json_return($status,$msg,$info=''){
     	$data['errorno']=$status;
     	$data['msg']=$msg;
-    	if(is_array($info)) $data['info']=$info;
+    	if(is_array($info) || $info!='') $data['info']=$info;
     	return json_encode($data);
     }
 }

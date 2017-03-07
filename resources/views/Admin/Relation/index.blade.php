@@ -32,7 +32,7 @@
                             <td>{{ $rs->bs_name }}</td>
                             <td>{{ $rs->ss_name }}</td>
                             <td>@if($rs->status)启用@else 未启用 @endif</td>
-                            <td><a target="_blank" href="{{asset('/')}}dinner/{{$rs->qr_id}}"><img src='data:image/png;base64,{!!base64_encode($rs->qrcode)!!}' /></a></td>
+                            <td><img src='data:image/png;base64,{!!base64_encode($rs->qrcode)!!}' /></td>
                             <td>
                                 <a href="{{URL::to('admin/relation')}}/{{ $rs->id }}/edit">修改</a>
                                 {{--<a href="javascript:;" onClick='isdelete({{ $rs->id }})'>删除</a>--}}

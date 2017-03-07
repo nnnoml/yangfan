@@ -59,7 +59,13 @@
 
         <li>
             <dl>
-                <dt onClick="window.location.href='{{URL::to('admin/user')}}'">分账流水</dt>
+                <dt onClick="window.location.href='{{URL::to('admin/cashflow')}}'">分账流水</dt>
+            </dl>
+        </li>
+
+        <li>
+            <dl>
+                <dt onClick="window.location.href='{{URL::to('admin/withdraw')}}'">提现日志</dt>
             </dl>
         </li>
 

@@ -39,6 +39,9 @@ class AdminSellGoodController extends Controller
         $data = Request::all();
         $data['s_id'] = Request::input('id',0);
         $data['price'] = intval(abs($data['price'])*100);
+        $data['seller_precent'] = intval(abs($data['seller_precent'])*100);
+        $data['buyer_precent'] = intval(abs($data['buyer_precent'])*100);
+        unset($data['id']);
         unset($data['type']);
         unset($data['_token']);
         unset($data['time_limit']);
@@ -63,6 +66,8 @@ class AdminSellGoodController extends Controller
     {
         $data = Request::all();
         $data['price'] = intval(abs($data['price'])*100);
+        $data['seller_precent'] = intval(abs($data['seller_precent'])*100);
+        $data['buyer_precent'] = intval(abs($data['buyer_precent'])*100);
         unset($data['type']);
         unset($data['_token']);
         if($data['time_limit']==0){

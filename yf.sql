@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 192.168.1.26
--- Generation Time: 2017-03-03 11:23:48
+-- Generation Time: 2017-03-07 11:56:35
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `leee_admin` (
 --
 
 INSERT INTO `leee_admin` (`id`, `name`, `pwd`, `salt`, `last_login_ip`, `login_count`, `created_at`, `updated_at`) VALUES
-(1, 'a', '9e9f9b5b6e02cf22550042effd00526f', '58b50c23523ca', '127.0.0.1', 13, '2017-02-27 09:07:37', '2017-03-03 01:12:35'),
+(1, 'a', '9e9f9b5b6e02cf22550042effd00526f', '58b50c23523ca', '127.0.0.1', 15, '2017-02-27 09:07:37', '2017-03-07 02:10:14'),
 (2, 'admin111111', '593d9b516b0a9045a446cae14d356c39', '58b3ec38552b0', '127.0.0.1', 1, '2017-02-28 02:28:09', '2017-02-28 02:28:09');
 
 -- --------------------------------------------------------
@@ -62,15 +62,40 @@ CREATE TABLE IF NOT EXISTS `leee_buy_shops` (
   `updated_at` timestamp NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `leee_buy_shops`
 --
 
 INSERT INTO `leee_buy_shops` (`id`, `name`, `user_wechat`, `area`, `start_time`, `end_time`, `updated_at`, `created_at`) VALUES
-(1, '绿地领海', '', '116.622162,40.019117', '00:00:00', '23:59:59', '2017-03-03 01:16:14', '2017-03-01 05:51:12'),
-(2, '至尊网络', '', '1', '', '', '2017-03-03 01:13:25', '2017-03-03 01:13:25');
+(1, '至尊网路', 'ogXult077N4Dp_Tbd3dWp0UPyEY4', '12', '', '', '2017-03-07 06:53:09', '2017-03-07 06:52:32');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `leee_cash_flow`
+--
+
+CREATE TABLE IF NOT EXISTS `leee_cash_flow` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `order_id` varchar(50) NOT NULL COMMENT '订单号',
+  `user_id` mediumint(8) unsigned NOT NULL COMMENT '用户id',
+  `price` int(10) unsigned NOT NULL COMMENT '入账金额',
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- 转存表中的数据 `leee_cash_flow`
+--
+
+INSERT INTO `leee_cash_flow` (`id`, `order_id`, `user_id`, `price`, `created_at`, `updated_at`) VALUES
+(1, '58be5a080c13d63503', 6, 1000, '2017-03-07 07:19:11', '2017-03-07 07:19:11'),
+(2, '58be5a080c13d63503', 8, 8000, '2017-03-07 07:19:12', '2017-03-07 07:19:12'),
+(3, '58be5a080c13d63503', 7, 1000, '2017-03-07 07:52:56', '2017-03-07 07:52:56'),
+(4, '58be5a080c13d63503', 8, 8000, '2017-03-07 07:52:56', '2017-03-07 07:52:56');
 
 -- --------------------------------------------------------
 
@@ -117,16 +142,14 @@ CREATE TABLE IF NOT EXISTS `leee_order` (
   `updated_at` timestamp NOT NULL,
   `status` tinyint(1) NOT NULL COMMENT '是否支付成功',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `leee_order`
 --
 
 INSERT INTO `leee_order` (`id`, `u_id`, `order_id`, `bs_id`, `g_id`, `ss_id`, `relation_id`, `order_num`, `order_single_price`, `order_cash`, `machine_num`, `created_at`, `updated_at`, `status`) VALUES
-(3, 2, '58b91cea98fb922048', 1, 3, 3, 9, 1, 0, 11155, '11v', '2017-03-03 07:36:10', '2017-03-03 07:36:10', 1),
-(7, 2, '58b924eb2359224256', 1, 3, 3, 9, 1, 11155, 11155, 'mc大队长', '2017-03-03 08:10:19', '2017-03-03 08:10:19', 0),
-(9, 2, '58b9265a1a11726357', 1, 1, 3, 9, 9, 1011, 9099, 'mc子龙', '2017-03-03 08:16:26', '2017-03-03 08:16:26', 0);
+(1, 6, '58be5a080c13d63503', 1, 1, 1, 1, 10, 1000, 10000, 'mac1', '2017-03-07 06:58:16', '2017-03-07 07:19:11', 1);
 
 -- --------------------------------------------------------
 
@@ -141,6 +164,8 @@ CREATE TABLE IF NOT EXISTS `leee_sell_goods` (
   `name` varchar(100) NOT NULL COMMENT '商品名称',
   `desc` text NOT NULL COMMENT '描述',
   `price` int(10) unsigned NOT NULL COMMENT '单价,精确到分',
+  `seller_precent` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '销售商铺分成',
+  `buyer_precent` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '购买商铺分成',
   `max_num` int(11) NOT NULL COMMENT '每天最大销售数',
   `start_time` varchar(10) NOT NULL,
   `end_time` varchar(10) NOT NULL,
@@ -148,29 +173,14 @@ CREATE TABLE IF NOT EXISTS `leee_sell_goods` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `leee_sell_goods`
 --
 
-INSERT INTO `leee_sell_goods` (`id`, `s_id`, `p_id`, `name`, `desc`, `price`, `max_num`, `start_time`, `end_time`, `status`, `created_at`, `updated_at`) VALUES
-(1, 3, 2, '奔跑鸡', '奔跑鸡奔跑鸡奔跑鸡奔跑鸡', 1011, -1, '01:00:00', '23:00:00', 1, '2017-03-01 03:18:49', '2017-03-01 03:18:49'),
-(3, 3, 1, '可乐鸡', '产品描述223', 11155, 0, '', '', 1, '2017-03-01 03:23:20', '2017-03-03 08:10:19');
-
--- --------------------------------------------------------
-
---
--- 表的结构 `leee_sell_goods_img`
---
-
-CREATE TABLE IF NOT EXISTS `leee_sell_goods_img` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `g_id` mediumint(9) unsigned NOT NULL COMMENT '关联商品id',
-  `name` varchar(50) NOT NULL COMMENT '图片名称',
-  `url` varchar(100) NOT NULL COMMENT '图片地址',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+INSERT INTO `leee_sell_goods` (`id`, `s_id`, `p_id`, `name`, `desc`, `price`, `seller_precent`, `buyer_precent`, `max_num`, `start_time`, `end_time`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '炒鸡', '炒鸡肉', 1000, 800, 100, -1, '', '', 1, '2017-03-07 06:51:03', '2017-03-07 06:57:59');
 
 -- --------------------------------------------------------
 
@@ -188,20 +198,15 @@ CREATE TABLE IF NOT EXISTS `leee_sell_shops` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- 转存表中的数据 `leee_sell_shops`
 --
 
 INSERT INTO `leee_sell_shops` (`id`, `name`, `user_wechat`, `area`, `start_time`, `end_time`, `created_at`, `updated_at`) VALUES
-(1, '哈哈哈', '', 'asdf', '0000-00-00', '0000-00-00', '2017-02-28 08:55:02', '2017-03-01 01:57:29'),
-(2, '新增店铺1', '', '123', '0000-00-00', '0000-00-00', '2017-03-01 02:03:33', '2017-03-01 02:04:45'),
-(3, 'i都会', '', '116.338153,39.988609', '0000-00-00', '0000-00-00', '2017-03-01 02:03:55', '2017-03-01 02:03:55'),
-(4, 'ddd', '', '116.338153,39.988609', '0000-00-00', '0000-00-00', '2017-03-01 02:04:56', '2017-03-01 02:04:56'),
-(5, '绿地领海', '', '116.557771,39.991705', '', '', '2017-03-01 05:45:48', '2017-03-01 05:45:48'),
-(6, '11', '', '222', '03:00:00', '14:00:00', '2017-03-01 05:46:46', '2017-03-01 05:46:46'),
-(7, '123', '', '123', '', '', '2017-03-01 05:49:49', '2017-03-01 05:49:49');
+(1, '老杨炒面', 'ogXult5EMPUMoh-pNtu4VWb8c-9w', '11', '', '', '2017-03-07 06:50:05', '2017-03-07 06:50:22'),
+(2, '魏家凉皮', '12313123sdasafsdf', '13', '', '', '2017-03-07 06:53:34', '2017-03-07 06:53:34');
 
 -- --------------------------------------------------------
 
@@ -214,20 +219,18 @@ CREATE TABLE IF NOT EXISTS `leee_shops_relation` (
   `qr_id` varchar(32) NOT NULL COMMENT 'qrcodeid',
   `bs_id` mediumint(8) unsigned NOT NULL COMMENT '购买商铺id',
   `ss_id` mediumint(8) unsigned NOT NULL COMMENT '销售商铺id',
-  `sale_id` mediumint(8) unsigned NOT NULL COMMENT '打折策略id',
   `status` tinyint(1) NOT NULL COMMENT '是否启用',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- 转存表中的数据 `leee_shops_relation`
 --
 
-INSERT INTO `leee_shops_relation` (`id`, `qr_id`, `bs_id`, `ss_id`, `sale_id`, `status`, `created_at`, `updated_at`) VALUES
-(9, '58b8c363eb4a19', 1, 3, 0, 1, '2017-03-03 01:14:11', '2017-03-03 01:42:09'),
-(10, '58b8c36d7cd3b10', 2, 5, 0, 1, '2017-03-03 01:14:21', '2017-03-03 01:14:21');
+INSERT INTO `leee_shops_relation` (`id`, `qr_id`, `bs_id`, `ss_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, '58be595bdfc8f1', 1, 1, 1, '2017-03-07 06:55:23', '2017-03-07 06:55:23');
 
 -- --------------------------------------------------------
 
@@ -243,18 +246,47 @@ CREATE TABLE IF NOT EXISTS `leee_user` (
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '该玩家是否可以分账，默认不可以',
   `reserve_num` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '预定次数',
   `reserve_price` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '预定金额',
+  `account_sum` int(15) unsigned NOT NULL DEFAULT '0' COMMENT '账户获得收益总计',
+  `account_cash` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '账户目前余额',
+  `account_num` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '账户单数统计',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- 转存表中的数据 `leee_user`
 --
 
-INSERT INTO `leee_user` (`id`, `openid`, `nick`, `avatar`, `status`, `reserve_num`, `reserve_price`, `created_at`, `updated_at`) VALUES
-(1, '12313123sdasafsdf', 'charis', 'http://image.phpcomposer.com/d/1e/768684492400b1470aa7882b29d5c.png', 1, 0, 0, '2017-03-02 03:48:10', '2017-03-02 05:15:18'),
-(2, '12313123sdasafsdf', 'charis', 'http://image.phpcomposer.com/d/1e/768684492400b1470aa7882b29d5c.png', 0, 0, 0, '2017-03-02 03:48:37', '2017-03-02 03:48:37');
+INSERT INTO `leee_user` (`id`, `openid`, `nick`, `avatar`, `status`, `reserve_num`, `reserve_price`, `account_sum`, `account_cash`, `account_num`, `created_at`, `updated_at`) VALUES
+(1, '12313123sdasafsdf', 'charis', 'http://image.phpcomposer.com/d/1e/768684492400b1470aa7882b29d5c.png', 1, 0, 0, 0, 0, 0, '2017-03-02 03:48:10', '2017-03-02 05:15:18'),
+(2, '12313123sdddd', 'charis', 'http://image.phpcomposer.com/d/1e/768684492400b1470aa7882b29d5c.png', 0, 0, 0, 0, 0, 0, '2017-03-05 01:50:59', '2017-03-02 03:48:37'),
+(6, 'ogXult7wdxNhb2ZrTiDgAuOKb8V8', '芋头', 'http://wx.qlogo.cn/mmopen/UxWQlYy1khIibOgESpGHFZzFWPsmPef7uaTiaiapkI1fbkxM3FDxcOr9Nbu6eNMLPnPc3dqL5aib54Sy4act7TymQVLSWyCeGmXL/0', 1, 3, 20000, 0, 0, 0, '2017-03-05 01:38:12', '2017-03-07 07:52:56'),
+(7, 'ogXult077N4Dp_Tbd3dWp0UPyEY4', '林中漫步', 'http://wx.qlogo.cn/mmopen/UDa9R1yl9UaSYkTpibhaBOIyzpibf3042Mkr7Sner1InjhN47qNNXyZIT1ru2smiclrDxMKktXeWpvKicChYic4eGTmjzgDoicd8SD/0', 1, 0, 0, 2000, 2000, 2, '2017-03-05 03:41:52', '2017-03-07 07:52:56'),
+(8, 'ogXult5EMPUMoh-pNtu4VWb8c-9w', '流浪的小灰熊', 'http://wx.qlogo.cn/mmopen/PiajxSqBRaEIcyUhsI4PeoPST4HOUYsYibJ7KsyD4fIFRuleu5NsUHAaTkXQEQRhQicZJKJWhpeGJV2sjPoXQLU6aeicttscVGR8EGC6qAPLo6U/0', 1, 0, 0, 16000, 16000, 2, '2017-03-05 04:32:47', '2017-03-07 07:52:56');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `leee_withdraw_flow`
+--
+
+CREATE TABLE IF NOT EXISTS `leee_withdraw_flow` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `user_id` mediumint(8) unsigned NOT NULL COMMENT '用户id',
+  `price` int(10) unsigned NOT NULL COMMENT '提现金额',
+  `now_cash` int(10) unsigned NOT NULL COMMENT '提现后余额',
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- 转存表中的数据 `leee_withdraw_flow`
+--
+
+INSERT INTO `leee_withdraw_flow` (`id`, `user_id`, `price`, `now_cash`, `created_at`, `updated_at`) VALUES
+(1, 6, 101, 500, '2017-03-07 07:51:35', '2017-03-07 07:51:35');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

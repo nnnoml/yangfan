@@ -13,11 +13,6 @@
                         </li>
 
                         <li>
-                            <span class="item_name">单价：</span>
-                            <input type="text" class="textbox" name="price" />&nbsp;&nbsp;单位 元，可精确到分
-                        </li>
-
-                        <li>
                             <span class="item_name">最大销售数量：</span>
                             <input type="text" class="textbox" name="max_num" value="-1"/>&nbsp;&nbsp;填-1则不限
                         </li>
@@ -53,6 +48,21 @@
                         <li style=" display:none" class="time_handle">
                             <span class="item_name">结束时间：</span>
                             <input type="text" class="textbox" id="end_time" name="end_time"  placeholder="请输入结束销售时间..." />
+                        </li>
+
+                        <li>
+                            <span class="item_name">单价：</span>
+                            <input type="text" class="textbox" name="price" />&nbsp;&nbsp;单位 元，可精确到分
+                        </li>
+
+                        <li>
+                            <span class="item_name">销售商铺分成：</span>
+                            <input type="text" class="textbox" name="seller_precent"/>&nbsp;&nbsp;单位 元，可精确到分
+                        </li>
+
+                        <li>
+                            <span class="item_name">购买商铺分成：</span>
+                            <input type="text" class="textbox" name="buyer_precent"/>&nbsp;&nbsp;单位 元，可精确到分
                         </li>
 
                         <li>
@@ -99,14 +109,17 @@
 
         $(".link_btn").click(function(){
             var name = $("input[name = 'name']").val();
-            var area = $("input[name = 'area']").val();
+            var price = $("input[name = 'price']").val();
+            var seller_precent = parseInt($("input[name = 'seller_precent']").val());
+            var buyer_precent = parseInt($("input[name = 'buyer_precent']").val());
 
             var time_limit = $('input:radio[name=time_limit]:checked').val();
             var start_time = $("input[name = 'start_time'").val();
             var end_time = $("input[name = 'end_time'").val();
 
-            if(name=='' || area=='')  showAlert('未填写完全','','');
+            if(name=='' || price=='')  showAlert('未填写完全','','');
             else if(time_limit==1 && end_time<start_time) showAlert('开始时间大于结束时间','','');
+            else if((buyer_precent + seller_precent)>price) showAlert('分成比例填写错误','','');
             else{
                 $.ajax({
                     url  : "{{URL::to('admin/sellgood')}}",
@@ -125,11 +138,8 @@
                             $(".loading_area").fadeOut(1500);
                             showAlert(result.msg,'','');
                         }
-
                     }
-
                 })
-
             }
         })
     </script>

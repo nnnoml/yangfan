@@ -23,12 +23,17 @@
                 </div>
 
                 <div class="ui-form-item ui-form-item-show ui-border-b">
+                    <label for="#">单价：</label>
+                    <input readonly type="text" value="{{$data->price/100}} 元/份">
+                </div>
+
+                <div class="ui-form-item ui-form-item-show ui-border-b">
                     <label for="#">剩余份数：</label>
                     <input readonly type="text" value="@if($data->max_num!=-1){{$data->max_num}}@else不限 @endif">
                 </div>
 
                 <div class="ui-form-item ui-border-b">
-                    <label>份 数：</label>
+                    <label>购买份数：</label>
                     <input type="tel" maxlength="3" autocomplete="off"  name="order_num" value="1" placeholder="请输入想购买的份数"/>
                     <a href="javascript:;" onClick="cls(this)" class="ui-icon-close"></a>
 
@@ -95,8 +100,30 @@
                     },
                     success: function (result) {
                         el.loading("hide");
-                        if (result.errorno == 0) {
-                            alert('掉起支付')
+                        if (result) {
+                            //-------------------------------------------------------------------
+                            function onBridgeReady(){
+                                WeixinJSBridge.invoke(
+                                        'getBrandWCPayRequest',result ,
+                                        function(res){
+                                            if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+
+                                            }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                                        }
+                                );
+                            }
+                            if (typeof WeixinJSBridge == "undefined"){
+                                if( document.addEventListener ){
+                                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                                }else if (document.attachEvent){
+                                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                                }
+                            }else{
+                                onBridgeReady();
+                            }
+                            //-------------------------------------------------------------------
+
                         }
                         else {
                             var dia = $.dialog({
