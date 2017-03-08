@@ -37,6 +37,8 @@ Route::group(['middleware' => ['web', 'wechat.oauth','insert.user']], function (
 	Route::get('/user','AppUserController@index');
 	Route::get('/account','AppUserController@account');
 	Route::get('/account/detail/{flag}','AppUserController@accountDetail');
+	Route::get('/withdraw','AppUserController@withdraw');
+	Route::post('/withdraw','AppUserController@withdrawDo');
 });
 
 

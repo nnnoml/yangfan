@@ -50,7 +50,7 @@ class OrderModel extends Model
     }
 
 
-    public static function WechatCallBack($order_id){
+    public static function OrderCallBack($order_id){
 
         $order_info = self::where('order_id',$order_id)->first();
         $goods_info = SellGood::find($order_info['g_id']);
@@ -108,12 +108,18 @@ class OrderModel extends Model
                 DB::commit();
                 //发起微信通知
                 $wechat = new WechatController();
-                //通知店家
-                $wechat->sendNotice($account_seller->openid,$goods_info,$order_info,$account_buyer->name);
+                //通知餐馆和网吧
+                $wechat->sendNoticeSeller($account_seller->openid,$goods_info,$order_info,$account_buyer->name);
+                $wechat->sendNoticeBuyer($account_buyer->openid,$goods_info,$order_info,$account_buyer->name);
                 //通知用户
                 $wechat->customerNotice($buy_user_info->openid,$goods_info,$order_info,$account_buyer->name);
+
+                return true;
         }
-        else DB::rollback();
+        else {
+            DB::rollback();
+            return false;
+        }
     }
 
     //额外要做个提现

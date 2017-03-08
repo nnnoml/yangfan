@@ -70,10 +70,11 @@ class AppOrderController extends Controller
                 'detail'           => $goods_info->name." ".$data['order_num']."份 共".$data['order_cash']."元",
                 'out_trade_no'     => $data['order_id'],
                 'total_fee'        => $data['order_cash'],
-                'notify_url'       => asset('/')."yangfan/public/wechatCallBack", // 支付结果通知网址，如果不设置则会使用配置里的默认地址
+                'notify_url'       => asset('/')."wechatCallBack", // 支付结果通知网址，如果不设置则会使用配置里的默认地址
                 'openid'           => $user_info->openid, // trade_type=JSAPI，此参数必传，用户在商户appid下的唯一标识，
                 // ...
             ];
+
             $order = new Order($attributes);
             $result = $payment->prepare($order);
 

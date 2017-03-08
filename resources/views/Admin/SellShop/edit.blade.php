@@ -8,7 +8,7 @@
                 <form id="data">
                     <ul class="ulColumn2">
                         <li>
-                            <span class="item_name" style="width:120px;">销售店铺名称：</span>
+                            <span class="item_name" style="width:120px;">餐馆名称：</span>
                             <input type="text" class="textbox textbox_295" name="name" value="{{$shop_list->name}}"/>
                         </li>
 

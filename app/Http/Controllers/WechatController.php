@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Request,Log;
 use EasyWeChat\Message\Text;
+use App\Model\OrderModel as Order;
 class WechatController extends Controller
 {
     /**
@@ -35,21 +36,51 @@ class WechatController extends Controller
         return $wechat->server->serve();
     }
 
-    public function wechatCallBack(){
+    public function wechatCallBack(Request $request){
         $wechat = app('wechat');
+
         $response = $wechat->payment->handleNotify(function($notify, $successful){
-            // 你的逻辑
-            return true; // 或者错误消息
+
+            $order = Order::where('order_id',$notify->out_trade_no)->first();
+            if (!$order) {
+                return 'Order not exist.';
+            }
+            // 如果订单存在
+            // 检查订单是否已经更新过支付状态
+            if ($order->status) {
+                return true; // 已经支付成功了就不再更新了
+            }
+            //支付成功回调，并且没有被执行过的订单
+            if ($successful) {
+                return Order::OrderCallBack($notify->out_trade_no);
+            }
         });
         return $response;
     }
 
 
-    public function sendNotice($openid,$goods,$order,$area){
+    public function sendNoticeSeller($openid,$goods,$order,$area){
+        //分账用户销售者分成
+        $seller_get_price = $goods->seller_precent*$order->order_num;
+
         $message = new Text(['content' => '您有一份新的订单：
 商品名称：'.$goods->name.'
 份数：'.$order->order_num.'份
-总价：'.$order->order_cash.'元
+分得：'.($seller_get_price/100).'元
+位置：'.$area.'_'.$order->machine_num.'
+下单时间：
+'.$order->created_at]);
+        $wechat = app('wechat');
+        $result = $wechat->staff->message($message)->to($openid)->send();
+    }
+
+    public function sendNoticeBuyer($openid,$goods,$order,$area){
+        //分账用户购买者分成
+        $buyer_get_price = $goods->buyer_precent*$order->order_num;
+        $message = new Text(['content' => '您有一份新的订单：
+商品名称：'.$goods->name.'
+份数：'.$order->order_num.'份
+分得：'.($buyer_get_price/100).'元
 位置：'.$area.'_'.$order->machine_num.'
 下单时间：
 '.$order->created_at]);
@@ -61,7 +92,7 @@ class WechatController extends Controller
         $message = new Text(['content' => '您的订单：
 商品名称：'.$goods->name.'
 份数：'.$order->order_num.'份
-总价：'.$order->order_cash.'元
+总价：'.($order->order_cash/100).'元
 位置：'.$area.'_'.$order->machine_num.'
 下单时间：
 '.$order->created_at.'

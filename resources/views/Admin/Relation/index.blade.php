@@ -19,8 +19,8 @@
                 <table class="table">
                     <tr>
                         <th>编号</th>
-                        <th>购买店铺</th>
-                        <th>销售店铺</th>
+                        <th>娱乐场所</th>
+                        <th>餐馆</th>
                         <th>是否启用</th>
                         <th>二维码</th>
                         <th>操作</th>

@@ -18,7 +18,7 @@
 
                 <button onClick="window.location.href='{{asset('/account/detail/cash')}}'" class="ui-btn-lg">入账明细</button>
                 <button onClick="window.location.href='{{asset('/account/detail/withdraw')}}'" class="ui-btn-lg">提现明细</button>
-                <button class="ui-btn-primary ui-btn-lg">提现</button>
+                <button onClick="window.location.href='{{asset('/withdraw')}}'" class="ui-btn-primary ui-btn-lg">申请提现</button>
             </div>
         </section>
 

@@ -9,7 +9,7 @@ class AdminBuyShopController extends Controller
 {
     public function index()
     {
-        $title="购买商铺列表";
+        $title="餐馆列表";
         $nav='2-2';
         $key=Request::input('key','');
         $shop_list = BuyShop::getAll($key);
@@ -22,7 +22,7 @@ class AdminBuyShopController extends Controller
 
     public function create()
     {
-        $title="新增购买店铺";
+        $title="新增餐馆";
         $nav='2-2';
         $shopkeeper = User::getShopkeeper();
         $shopkeeper_list='';
@@ -49,7 +49,7 @@ class AdminBuyShopController extends Controller
 
     public function edit($id)
     {
-        $title="修改购买店铺";
+        $title="修改餐馆";
         $nav='2-1';
         $shop_list = BuyShop::getOne($id);
 

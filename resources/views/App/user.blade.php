@@ -10,7 +10,7 @@
                 <h4>订单总价：{{$rs->order_num}}*{{$rs->order_single_price/100}} = {{$rs->order_cash/100}} 元</h4>
                 <h4>送达地址：{{$rs->bs_name}}-{{$rs->machine_num}}</h4>
                 @if($rs->status==0)
-                <button class="ui-btn ui-btn-danger">支付</button>
+                <button class="ui-btn ui-btn-danger">支付失败</button>
                 @endif
             </li>
             @endforeach

@@ -8,17 +8,17 @@
                 <form id="data">
                     <ul class="ulColumn2">
                         <li>
-                            <span class="item_name" style="width:120px;">销售店铺选择：</span>
+                            <span class="item_name" style="width:120px;">餐馆选择：</span>
                             <select name="ss_id">
-                                <option value="0">请选择销售店铺</option>
+                                <option value="0">请选择餐馆</option>
                                 {!!$sell_shop_option!!}
                             </select>
                         </li>
 
                         <li>
-                            <span class="item_name" style="width:120px;">购买店铺选择：</span>
+                            <span class="item_name" style="width:120px;">娱乐场所选择：</span>
                             <select name="bs_id">
-                                <option value="0">请选择购买店铺</option>
+                                <option value="0">请选择娱乐场所</option>
                                 {!!$buy_shop_option!!}
                             </select>
                         </li>

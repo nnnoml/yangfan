@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,16 +39,16 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'http://nnnoml.com',
 
     /*
     * 自定义常量
     */
 
-    'title' => env('TITLE',''),
-    'title_en' => env('TITLE_EN',''),
-    'copyright' => env('COPY_RIGHT',''),
-    'versionCMS' => env('VERSION_CMS',''),
+    'title' => env('TITLE','华东餐饮集团后台管理系统'),
+    'title_en' => env('TITLE_EN','East_China_Catering_group_Management_System'),
+    'copyright' => env('COPY_RIGHT','Copyright_©_Charis'),
+    'versionCMS' => env('VERSION_CMS','EC_CMS_V1.0.0_Release_20170227'),
 
 
     /*
@@ -101,9 +101,9 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => '1234567890qwerty',
 
-    'cipher' => 'AES-256-CBC',
+    'cipher' => 'AES-128-CBC',
 
     /*
     |--------------------------------------------------------------------------

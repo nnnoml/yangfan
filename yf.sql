@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 192.168.1.26
--- Generation Time: 2017-03-07 11:56:35
+-- Generation Time: 2017-03-08 11:08:02
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `leee_admin` (
 --
 
 INSERT INTO `leee_admin` (`id`, `name`, `pwd`, `salt`, `last_login_ip`, `login_count`, `created_at`, `updated_at`) VALUES
-(1, 'a', '9e9f9b5b6e02cf22550042effd00526f', '58b50c23523ca', '127.0.0.1', 15, '2017-02-27 09:07:37', '2017-03-07 02:10:14'),
+(1, 'a', '9e9f9b5b6e02cf22550042effd00526f', '58b50c23523ca', '127.0.0.1', 17, '2017-02-27 09:07:37', '2017-03-08 06:26:42'),
 (2, 'admin111111', '593d9b516b0a9045a446cae14d356c39', '58b3ec38552b0', '127.0.0.1', 1, '2017-02-28 02:28:09', '2017-02-28 02:28:09');
 
 -- --------------------------------------------------------
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `leee_sell_goods` (
 --
 
 INSERT INTO `leee_sell_goods` (`id`, `s_id`, `p_id`, `name`, `desc`, `price`, `seller_precent`, `buyer_precent`, `max_num`, `start_time`, `end_time`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '炒鸡', '炒鸡肉', 1000, 800, 100, -1, '', '', 1, '2017-03-07 06:51:03', '2017-03-07 06:57:59');
+(1, 1, 1, '炒鸡', '炒鸡肉', 2, 1, 1, -1, '', '', 1, '2017-03-07 06:51:03', '2017-03-08 01:33:46');
 
 -- --------------------------------------------------------
 
@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `leee_user` (
 INSERT INTO `leee_user` (`id`, `openid`, `nick`, `avatar`, `status`, `reserve_num`, `reserve_price`, `account_sum`, `account_cash`, `account_num`, `created_at`, `updated_at`) VALUES
 (1, '12313123sdasafsdf', 'charis', 'http://image.phpcomposer.com/d/1e/768684492400b1470aa7882b29d5c.png', 1, 0, 0, 0, 0, 0, '2017-03-02 03:48:10', '2017-03-02 05:15:18'),
 (2, '12313123sdddd', 'charis', 'http://image.phpcomposer.com/d/1e/768684492400b1470aa7882b29d5c.png', 0, 0, 0, 0, 0, 0, '2017-03-05 01:50:59', '2017-03-02 03:48:37'),
-(6, 'ogXult7wdxNhb2ZrTiDgAuOKb8V8', '芋头', 'http://wx.qlogo.cn/mmopen/UxWQlYy1khIibOgESpGHFZzFWPsmPef7uaTiaiapkI1fbkxM3FDxcOr9Nbu6eNMLPnPc3dqL5aib54Sy4act7TymQVLSWyCeGmXL/0', 1, 3, 20000, 0, 0, 0, '2017-03-05 01:38:12', '2017-03-07 07:52:56'),
+(6, 'ogXult7wdxNhb2ZrTiDgAuOKb8V8', '芋头', 'http://wx.qlogo.cn/mmopen/UxWQlYy1khIibOgESpGHFZzFWPsmPef7uaTiaiapkI1fbkxM3FDxcOr9Nbu6eNMLPnPc3dqL5aib54Sy4act7TymQVLSWyCeGmXL/0', 1, 3, 20000, 5000, 5000, 1, '2017-03-05 01:38:12', '2017-03-08 07:26:26'),
 (7, 'ogXult077N4Dp_Tbd3dWp0UPyEY4', '林中漫步', 'http://wx.qlogo.cn/mmopen/UDa9R1yl9UaSYkTpibhaBOIyzpibf3042Mkr7Sner1InjhN47qNNXyZIT1ru2smiclrDxMKktXeWpvKicChYic4eGTmjzgDoicd8SD/0', 1, 0, 0, 2000, 2000, 2, '2017-03-05 03:41:52', '2017-03-07 07:52:56'),
 (8, 'ogXult5EMPUMoh-pNtu4VWb8c-9w', '流浪的小灰熊', 'http://wx.qlogo.cn/mmopen/PiajxSqBRaEIcyUhsI4PeoPST4HOUYsYibJ7KsyD4fIFRuleu5NsUHAaTkXQEQRhQicZJKJWhpeGJV2sjPoXQLU6aeicttscVGR8EGC6qAPLo6U/0', 1, 0, 0, 16000, 16000, 2, '2017-03-05 04:32:47', '2017-03-07 07:52:56');
 
@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `leee_withdraw_flow` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL COMMENT '用户id',
   `price` int(10) unsigned NOT NULL COMMENT '提现金额',
-  `now_cash` int(10) unsigned NOT NULL COMMENT '提现后余额',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '提现状态，0未审核，1，已提现，2，已驳回',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
@@ -285,8 +285,8 @@ CREATE TABLE IF NOT EXISTS `leee_withdraw_flow` (
 -- 转存表中的数据 `leee_withdraw_flow`
 --
 
-INSERT INTO `leee_withdraw_flow` (`id`, `user_id`, `price`, `now_cash`, `created_at`, `updated_at`) VALUES
-(1, 6, 101, 500, '2017-03-07 07:51:35', '2017-03-07 07:51:35');
+INSERT INTO `leee_withdraw_flow` (`id`, `user_id`, `price`, `status`, `created_at`, `updated_at`) VALUES
+(1, 6, 101, 0, '2017-03-07 07:51:35', '2017-03-08 07:26:26');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
