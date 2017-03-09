@@ -7,6 +7,8 @@ use App\Model\UserModel as User;
 use App\Model\OrderModel as Order;
 use App\Model\CashFlowModel as Cash;
 use App\Model\WithdrawModel as Withdraw;
+use App\Http\Controllers\WechatController;
+use App\Model\ConfigModel as Config;
 
 class AppUserController extends Controller
 {
@@ -68,6 +70,7 @@ class AppUserController extends Controller
     }
 
     public function withdrawDo(){
+
         $num = Request::input('num',0);
         $num = $num*100;
         $has_info = Withdraw::where(['user_id'=>Session::get('user_id'),'status'=>0])->first();
@@ -77,6 +80,11 @@ class AppUserController extends Controller
         }
         $rs = Withdraw::newWithdraw(Session::get('user_id'),$num);
         if($rs){
+            $wechat = new WechatController();
+            $user_info = $this->user_info;
+            $site_config = Config::getConfig();
+            $wechat->sendWithdrawNotice($site_config->withdraw_notice_openid,$user_info,$num);
+
             echo self::json_return(0,'成功');
             exit;
         }

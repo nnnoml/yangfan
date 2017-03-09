@@ -56,12 +56,12 @@
                         </li>
 
                         <li>
-                            <span class="item_name">销售商铺分成：</span>
+                            <span class="item_name">餐馆分成：</span>
                             <input type="text" class="textbox" name="seller_precent"/>&nbsp;&nbsp;单位 元，可精确到分
                         </li>
 
                         <li>
-                            <span class="item_name">购买商铺分成：</span>
+                            <span class="item_name">娱乐场所分成：</span>
                             <input type="text" class="textbox" name="buyer_precent"/>&nbsp;&nbsp;单位 元，可精确到分
                         </li>
 

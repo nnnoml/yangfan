@@ -1,6 +1,6 @@
 @extends('frozenui')
 @section('content')
-    <section class="ui-container">
+    <section class="ui-container" style="padding-bottom:80px;">
 
         <section class="ui-notice" style=" height:80%">
             <div class="ui-avatar" style="width:100px;height:100px; margin-bottom:20px;">

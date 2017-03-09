@@ -1,6 +1,6 @@
 @extends('frozenui')
 @section('content')
-    <section class="ui-container">
+    <section class="ui-container" style="padding-bottom:80px;">
 
         <ul class="ui-row ui-whitespace" style="padding-bottom:80px;">
             @foreach ($dinner_list as $rs)

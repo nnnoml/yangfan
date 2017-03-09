@@ -1,6 +1,6 @@
 @extends('frozenui')
 @section('content')
-    <section class="ui-container">
+    <section class="ui-container" style="padding-bottom:80px;">
 
         <section id="list">
         <ul class="ui-list ui-list-pure ui-border-tb">

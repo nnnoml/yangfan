@@ -16,7 +16,6 @@ class AppOrderController extends Controller
         exit;
     }
 
-
     public function show($id){
         $qr = Request::input('qr','');
         if($qr=='') $this->index();

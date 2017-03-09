@@ -18,16 +18,23 @@ class WechatController extends Controller
 
         $wechat = app('wechat');
         $wechat->server->setMessageHandler(function($message){
+
             if ($message->MsgType == 'event') {
                 switch ($message->Event) {
                     case 'subscribe':
                         $text = "欢迎关注～！<a href='http://nnnoml.com/yangfan/public'>点击订餐</a>";
+                    case 'CLICK':
+                        if($message->EventKey=='zsjm')
+                            $text = "请联系微信：Fashionyf
+或致电：13096952812";
+
                 }
 
             }
             else if ($message->MsgType == 'text'){
                 $text = "<a href='http://nnnoml.com/yangfan/public'>点击订餐</a>";
             }
+
             return $text;
         });
 
@@ -56,6 +63,15 @@ class WechatController extends Controller
             }
         });
         return $response;
+    }
+
+    public function sendWithdrawNotice($openid,$user_info,$num){
+        $message = new Text(['content' => '新的提现申请：
+提现用户：'.$user_info->nick.'
+金额：'.($num/100).'元
+请您及时到后台进行处理']);
+        $wechat = app('wechat');
+        $result = $wechat->staff->message($message)->to($openid)->send();
     }
 
 
