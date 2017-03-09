@@ -60,6 +60,7 @@ class OrderModel extends Model
         $account_buyer = self::leftJoin('buy_shops as bs','bs.id','=','order.bs_id')
                                 ->leftJoin('user as u','u.openid','=','bs.user_wechat')
                                 ->select('u.id','u.nick','u.openid','bs.name')
+                                ->where('order.order_id',$order_id)
                                 ->first();
 
         $account_buyer_info = User::find($account_buyer->id);
@@ -67,6 +68,7 @@ class OrderModel extends Model
         $account_seller = self::leftJoin('sell_shops as ss','ss.id','=','order.ss_id')
                                 ->leftJoin('user as u','u.openid','=','ss.user_wechat')
                                 ->select('u.id','u.nick','u.openid')
+                                ->where('order.order_id',$order_id)
                                 ->first();
         $account_seller_info = User::find($account_seller->id);
 

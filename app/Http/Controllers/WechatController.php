@@ -44,6 +44,8 @@ class WechatController extends Controller
     }
 
     public function wechatCallBack(Request $request){
+//        Order::OrderCallBack('58c125274089514624');
+//        exit;
         $wechat = app('wechat');
 
         $response = $wechat->payment->handleNotify(function($notify, $successful){
