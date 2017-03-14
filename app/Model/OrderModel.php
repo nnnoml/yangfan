@@ -115,6 +115,8 @@ class OrderModel extends Model
                 $wechat->sendNoticeBuyer($account_buyer->openid,$goods_info,$order_info,$account_buyer->name);
                 //通知用户
                 $wechat->customerNotice($buy_user_info->openid,$goods_info,$order_info,$account_buyer->name);
+                //通知杨帆
+                $wechat->sendYangfan($goods_info,$order_info,$account_buyer->name);
 
                 return true;
         }

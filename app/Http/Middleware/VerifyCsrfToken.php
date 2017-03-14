@@ -14,6 +14,7 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         //
         'wechat',
-        'wechatCallBack'
+        'wechatCallBack',
+        '/admin/sellgood/uploadImg'
     ];
 }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 192.168.1.26
--- Generation Time: 2017-03-08 11:08:02
+-- Generation Time: 2017-03-14 02:17:40
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `leee_admin` (
 --
 
 INSERT INTO `leee_admin` (`id`, `name`, `pwd`, `salt`, `last_login_ip`, `login_count`, `created_at`, `updated_at`) VALUES
-(1, 'a', '9e9f9b5b6e02cf22550042effd00526f', '58b50c23523ca', '127.0.0.1', 17, '2017-02-27 09:07:37', '2017-03-08 06:26:42'),
+(1, 'a', '9e9f9b5b6e02cf22550042effd00526f', '58b50c23523ca', '127.0.0.1', 18, '2017-02-27 09:07:37', '2017-03-13 05:47:44'),
 (2, 'admin111111', '593d9b516b0a9045a446cae14d356c39', '58b3ec38552b0', '127.0.0.1', 1, '2017-02-28 02:28:09', '2017-02-28 02:28:09');
 
 -- --------------------------------------------------------
@@ -106,6 +106,7 @@ INSERT INTO `leee_cash_flow` (`id`, `order_id`, `user_id`, `price`, `created_at`
 CREATE TABLE IF NOT EXISTS `leee_conf` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL COMMENT '店铺名称',
+  `withdraw_notice_openid` varchar(50) NOT NULL COMMENT '提现微信通知用户',
   `AppID` varchar(50) NOT NULL COMMENT '微信appid',
   `AppSecret` varchar(50) NOT NULL COMMENT '微信秘钥',
   `created_at` timestamp NOT NULL,
@@ -117,8 +118,8 @@ CREATE TABLE IF NOT EXISTS `leee_conf` (
 -- 转存表中的数据 `leee_conf`
 --
 
-INSERT INTO `leee_conf` (`id`, `title`, `AppID`, `AppSecret`, `created_at`, `updated_at`) VALUES
-(2, 'ttt', 'wx0095a618c5b767ae', '', '2017-02-28 06:06:50', '2017-02-28 06:06:50');
+INSERT INTO `leee_conf` (`id`, `title`, `withdraw_notice_openid`, `AppID`, `AppSecret`, `created_at`, `updated_at`) VALUES
+(2, 'ttt', '', 'wx0095a618c5b767ae', '', '2017-02-28 06:06:50', '2017-02-28 06:06:50');
 
 -- --------------------------------------------------------
 
@@ -160,7 +161,7 @@ INSERT INTO `leee_order` (`id`, `u_id`, `order_id`, `bs_id`, `g_id`, `ss_id`, `r
 CREATE TABLE IF NOT EXISTS `leee_sell_goods` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT COMMENT '商品',
   `s_id` mediumint(8) unsigned NOT NULL COMMENT '关联销售商铺的id',
-  `p_id` int(11) NOT NULL COMMENT '暂时图片id',
+  `p_id` varchar(80) NOT NULL COMMENT '图片_url',
   `name` varchar(100) NOT NULL COMMENT '商品名称',
   `desc` text NOT NULL COMMENT '描述',
   `price` int(10) unsigned NOT NULL COMMENT '单价,精确到分',
@@ -173,14 +174,15 @@ CREATE TABLE IF NOT EXISTS `leee_sell_goods` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- 转存表中的数据 `leee_sell_goods`
 --
 
 INSERT INTO `leee_sell_goods` (`id`, `s_id`, `p_id`, `name`, `desc`, `price`, `seller_precent`, `buyer_precent`, `max_num`, `start_time`, `end_time`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '炒鸡', '炒鸡肉', 2, 1, 1, -1, '', '', 1, '2017-03-07 06:51:03', '2017-03-08 01:33:46');
+(1, 1, '1', '炒鸡', '炒鸡肉', 2, 1, 1, -1, '', '', 1, '2017-03-07 06:51:03', '2017-03-08 01:33:46'),
+(3, 2, 'uploads/2017/03_13/2017-03-13-19-22-08-58c680e0a2ba8.png', '名称', '描述', 1000, 100, 100, -1, '', '', 0, '2017-03-13 11:17:53', '2017-03-13 11:22:12');
 
 -- --------------------------------------------------------
 

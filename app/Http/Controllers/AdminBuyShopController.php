@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Request;
+use Request,Storage;
 use App\Model\BuyShopModel as BuyShop;
 use App\Model\UserModel as User;
 class AdminBuyShopController extends Controller
 {
     public function index()
     {
-        $title="餐馆列表";
+        $title="娱乐场所列表";
         $nav='2-2';
         $key=Request::input('key','');
         $shop_list = BuyShop::getAll($key);
@@ -22,7 +22,7 @@ class AdminBuyShopController extends Controller
 
     public function create()
     {
-        $title="新增餐馆";
+        $title="新增娱乐场所";
         $nav='2-2';
         $shopkeeper = User::getShopkeeper();
         $shopkeeper_list='';
@@ -49,7 +49,7 @@ class AdminBuyShopController extends Controller
 
     public function edit($id)
     {
-        $title="修改餐馆";
+        $title="修改娱乐场所";
         $nav='2-1';
         $shop_list = BuyShop::getOne($id);
 
@@ -82,4 +82,5 @@ class AdminBuyShopController extends Controller
         else
             echo self::json_return(10003,'修改失败');
     }
+
 }

@@ -10,7 +10,7 @@ class AdminSellShopController extends Controller
 {
     public function index()
     {
-        $title="娱乐场所列表";
+        $title="餐馆列表";
         $nav='2-1';
         $key=Request::input('key','');
         $shop_list = SellShop::getAll($key);
@@ -23,7 +23,7 @@ class AdminSellShopController extends Controller
 
     public function create()
     {
-        $title="新增娱乐场所";
+        $title="新增餐馆";
         $nav='2-1';
         $shopkeeper = User::getShopkeeper();
         $shopkeeper_list='';
@@ -50,7 +50,7 @@ class AdminSellShopController extends Controller
 
     public function edit($id)
     {
-        $title="修改娱乐场所";
+        $title="修改餐馆";
         $nav='2-1';
         $shop_list = SellShop::find($id);
         $shopkeeper = User::getShopkeeper();

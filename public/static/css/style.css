@@ -200,3 +200,5 @@ header .rt_nav li .quit_icon:before{content:"Q";}
 .loading_txt mark{background:none;font-size:12px;color:red;}
 
 #pic_url{display:none; max-width:200px;}
+#upload_btn{  display: none;}
+#img_url{  display: none; max-width:200px;}

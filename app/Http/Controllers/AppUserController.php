@@ -15,7 +15,11 @@ class AppUserController extends Controller
     public $user_info;
     public function __construct()
     {
-        $this->user_info = User::find(Session::get('user_id'));
+        $user_info = User::find(Session::get('user_id'));
+        $user_status = $user_info->status;
+        Session::set('user_status',$user_status);
+        Session::save();
+        $this->user_info = $user_info;
     }
 
     public function index(){

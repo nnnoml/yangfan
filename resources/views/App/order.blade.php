@@ -5,7 +5,7 @@
 
             <ul class="ui-row ui-whitespace">
                 <li class="ui-col ui-col-100">
-                    <img style="width:100%" src="{{asset('property/')}}/{{$data->p_id}}.png"/>
+                    <img style="width:100%" src="{{asset('/')}}{{$data->p_id}}"/>
                 </li>
                 <li class="ui-col ui-col-100 ui-border-radius">【{{$data->name}}】{{$data->desc}}</li>
                 <li class="ui-col ui-col-100">&nbsp;</li>

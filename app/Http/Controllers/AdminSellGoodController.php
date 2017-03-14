@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Request;
+use Request,Storage;
 use App\Model\SellGoodModel as SellGood;
 use App\Model\SellShopModel as SellShop;
 
@@ -13,6 +13,7 @@ class AdminSellGoodController extends Controller
         $key=Request::input('key','');
         //找到商品列表
         $goods_list = SellGood::getAll($id,$key);
+
         $title = SellShop::find($id);
         $title = $title->name."-商品列表";
 
@@ -82,5 +83,28 @@ class AdminSellGoodController extends Controller
         }
         else
             echo self::json_return(10003,'修改失败');
+    }
+
+    public function uploadImg(){
+
+        $file = Request::file('file');
+        if ($file->isValid()) {
+
+            // 获取文件相关信息
+            $originalName = $file->getClientOriginalName(); // 文件原名
+            $ext = $file->getClientOriginalExtension();     // 扩展名
+            $realPath = $file->getRealPath();   //临时文件的绝对路径
+            $type = $file->getClientMimeType();     // image/jpeg
+
+            // 上传文件
+            $filename = date('Y-m-d-H-i-s') . '-' . uniqid() . '.' . $ext;
+            // 使用我们新建的uploads本地存储空间（目录）
+            Storage::disk('uploads')->put($filename, file_get_contents($realPath));
+
+        }
+
+        echo json_encode(array(
+            'name'  => 'uploads/'.date('Y').'/'.date('m').'_'.date('d').'/'.$filename
+        ));
     }
 }

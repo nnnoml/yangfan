@@ -60,6 +60,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::resource('/admin/sellshop','AdminSellShopController');
 		//与销售门店关联的商品路由
 		Route::resource('/admin/sellgood','AdminSellGoodController');
+		//商品上传图片
+		Route::post('/admin/sellgood/uploadImg','AdminSellGoodController@uploadImg');
 
 	//后台购买门店路由
 	Route::resource('/admin/buyshop','AdminBuyShopController');

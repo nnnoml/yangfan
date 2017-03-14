@@ -40,7 +40,7 @@
                             <td>{{ $rs->price/100 }}</td>
                             <td>{{ $rs->seller_precent/100 }}</td>
                             <td>{{ $rs->buyer_precent/100 }}</td>
-                            <td> <img style="max-width:100px;" src="{{asset('/')}}property/{{$rs->p_id}}.png" /></td>
+                            <td> <img style="max-width:100px;" src="{{asset('/')}}{{$rs->p_id}}" /></td>
                             <td>{{ $rs->max_num }}</td>
                             <td>@if($rs->start_time!=0){{ $rs->start_time }}/{{ $rs->end_time }}@else - @endif</td>
                             <td>@if($rs->status) 上线 @else 未上线 @endif</td>

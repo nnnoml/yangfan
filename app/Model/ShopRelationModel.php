@@ -48,7 +48,9 @@ class ShopRelationModel extends Model
     public static function getDinnerInfo($qr_id)
     {
         return self::leftJoin('buy_shops as bs','bs.id','=','shops_relation.bs_id')
+                        ->leftJoin('sell_shops as ss','ss.id','=','shops_relation.ss_id')
             ->where('shops_relation.qr_id',$qr_id)
+            ->select('shops_relation.*','bs.name','ss.start_time','ss.end_time')
             ->first();
     }
 

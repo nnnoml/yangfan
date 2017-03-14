@@ -18,12 +18,6 @@
                         </li>
 
                         <li>
-                            <span class="item_name">对应图片id：</span>
-                            <input type="text" class="textbox" name="p_id" id="pic_id"/>
-                            <img id="pic_url" />
-                        </li>
-
-                        <li>
                             <span class="item_name">产品描述：</span>
                             <textarea type="text" class="textbox textbox_295" style="height:100px;resize:none" name="desc" ></textarea>
                         </li>
@@ -32,6 +26,14 @@
                             <span class="item_name">是否上线：</span>
                             <label class="single_selection"><input type="radio" name="status" value='1'/>上线</label>
                             <label class="single_selection"><input type="radio" name="status" checked='true' value='0'/>不上线</label>
+                        </li>
+
+                        <li class="form-group">
+                            <span class="item_name" style="width:120px;">图片上传：</span>
+                            <input type="button" class="link_btn" id="click_btn" value="选择图片"/>
+                            <input id="input_img_url" name="p_id" type="hidden"  value="">
+                            <input id="upload_btn" type="file" name="file" >
+                            <img  id="img_url" name="id" src="" />
                         </li>
 
                         <li>
@@ -67,7 +69,7 @@
 
                         <li>
                             <span class="item_name"></span>
-                            <input type="button" class="link_btn" value="提交"/>
+                            <input type="button" class="link_btn" id="link_btn" value="提交"/>
                         </li>
                     </ul>
                 </form>
@@ -77,7 +79,46 @@
     </section>
 @endsection
 @section('footer')
+    <script src="{{asset('static/js/jquery.ajaxfileupload.js')}}"></script>
     <script>
+
+        //上传图片相关
+        function applyAjaxFileUpload(element) {
+            $(element).AjaxFileUpload({
+                action: "{{asset('/admin/sellgood/uploadImg')}}",
+                onChange: function(filename) {
+                    // Create a span element to notify the user of an upload in progress
+                    var $span = $("<span />").attr("class", $(this).attr("id")).text("Uploading").insertAfter($(this));
+
+                    $(this).remove();
+
+                    interval = window.setInterval(function() {
+                        var text = $span.text();
+                        if (text.length < 13) {
+                            $span.text(text + ".");
+                        } else {
+                            $span.text("Uploading");
+                        }
+                    }, 200);
+                },
+                onComplete: function(filename,result) {
+                    window.clearInterval(interval);
+
+                    var $span = $("span." + $(this).attr("id")).text("");
+                    $("#input_img_url").val(result.name);
+                    $("#img_url").attr('src',"{{asset('/')}}"+result.name);
+                    $("#img_url").show();
+                    $fileInput = $("<input />").attr({type: "file", name: $(this).attr("name"), id: $(this).attr("id")});
+                }
+            });
+        }
+
+        //上传图片相关
+        $('#click_btn').on('click',function(){
+            $('#upload_btn').trigger('click');
+            applyAjaxFileUpload("#upload_btn");
+        })
+
         //是否限时奖品时间
         $('input:radio[name=time_limit]').click(function(){
             if($(this).val()==1){
@@ -107,7 +148,7 @@
             });
         });
 
-        $(".link_btn").click(function(){
+        $("#link_btn").click(function(){
             var name = $("input[name = 'name']").val();
             var price = $("input[name = 'price']").val();
             var seller_precent = parseInt($("input[name = 'seller_precent']").val());
