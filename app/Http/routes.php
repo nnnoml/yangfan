@@ -25,7 +25,6 @@
 Route::any('/wechat', 'WechatController@serve');
 Route::any('/wechatCallBack', 'WechatController@wechatCallBack');
 
-
 Route::group(['middleware' => ['web', 'wechat.oauth','insert.user']], function () {
 //Route::group(['middleware' => ['web']], function () {
 	/*

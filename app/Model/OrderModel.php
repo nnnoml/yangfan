@@ -67,7 +67,7 @@ class OrderModel extends Model
 
         $account_seller = self::leftJoin('sell_shops as ss','ss.id','=','order.ss_id')
                                 ->leftJoin('user as u','u.openid','=','ss.user_wechat')
-                                ->select('u.id','u.nick','u.openid')
+                                ->select('u.id','u.nick','u.openid','ss.name')
                                 ->where('order.order_id',$order_id)
                                 ->first();
         $account_seller_info = User::find($account_seller->id);
@@ -81,7 +81,7 @@ class OrderModel extends Model
                 $rs1 = 1;
 
         //修改订单表状态 乐观锁
-            $rs2 = self::where('status', 0)->update(['status' => 1]);
+            $rs2 = self::where(['order_id'=>$order_id,'status'=>0])->update(['status' => 1]);
 
         //购买用户做统计
             $buy_user_info->reserve_num +=1;
@@ -111,12 +111,12 @@ class OrderModel extends Model
                 //发起微信通知
                 $wechat = new WechatController();
                 //通知餐馆和网吧
-                $wechat->sendNoticeSeller($account_seller->openid,$goods_info,$order_info,$account_buyer->name);
-                $wechat->sendNoticeBuyer($account_buyer->openid,$goods_info,$order_info,$account_buyer->name);
-                //通知用户
-                $wechat->customerNotice($buy_user_info->openid,$goods_info,$order_info,$account_buyer->name);
+                $wechat->sendNoticeSeller($account_seller->openid,$goods_info,$order_info,$account_seller->name,$account_buyer->name);
+                $wechat->sendNoticeBuyer($account_buyer->openid,$goods_info,$order_info,$account_seller->name,$account_buyer->name);
                 //通知杨帆
-                $wechat->sendYangfan($goods_info,$order_info,$account_buyer->name);
+                $wechat->sendYangfan($goods_info,$order_info,$account_seller->name,$account_buyer->name);
+                //通知用户
+                $wechat->customerNotice($buy_user_info->openid,$goods_info,$order_info,$account_seller->name,$account_buyer->name);
 
                 return true;
         }

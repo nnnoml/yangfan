@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Request,Log;
 use EasyWeChat\Message\Text;
 use App\Model\OrderModel as Order;
+use App\Model\ConfigModel as Config;
+
 class WechatController extends Controller
 {
     /**
@@ -32,9 +34,9 @@ class WechatController extends Controller
                 }
 
             }
-//            else if ($message->MsgType == 'text'){
-//                $text = "<a href='http://nnnoml.com/yangfan/public'>点击订餐</a>";
-//            }
+            else if ($message->MsgType == 'text'){
+                $text = "";
+            }
 
             return $text;
         });
@@ -68,69 +70,158 @@ class WechatController extends Controller
         return $response;
     }
 
+    //提现微信通知杨帆
     public function sendWithdrawNotice($openid,$user_info,$num){
-        $message = new Text(['content' => '新的提现申请：
-提现用户：'.$user_info->nick.'
-金额：'.($num/100).'元
-请您及时到后台进行处理']);
         $wechat = app('wechat');
-        $result = $wechat->staff->message($message)->to($openid)->send();
+        $notice = $wechat->notice;
+        $userId = $openid;
+        $templateId = 'eQiilj-xPpGnaNXLscc9RZITKGPKlxE6YKyqgdoh_bI';
+        //$url = 'http://overtrue.me';//->withUrl($url)
+        $data = array(
+            "first"  => "新的提现申请：",
+            "keyword1"   => $user_info->id.' ('.$user_info->nick.')',//会员卡号
+            "keyword2"  => ($num/100).'元', //提现金额
+            "keyword3" => date('Y-m-d H:i:s'), //提现时间
+            "keyword4" => (($user_info->account_cash-$num)/100).'元', //剩余金额
+            "remark" => "请您及时到后台进行处理", //remark
+        );
+        $result = $notice->uses($templateId)->andData($data)->andReceiver($userId)->send();
     }
 
+//    public function sendWithdrawNotice($openid,$user_info,$num){
+//        $message = new Text(['content' => '新的提现申请：
+//提现用户：'.$user_info->nick.'
+//金额：'.($num/100).'元
+//请您及时到后台进行处理']);
+//        $wechat = app('wechat');
+//        $result = $wechat->staff->message($message)->to($openid)->send();
+//    }
 
-    public function sendNoticeSeller($openid,$goods,$order,$area){
-        //分账用户销售者分成
+
+//餐馆通知
+    public function sendNoticeSeller($openid,$goods,$order,$seller,$buyer){
+        //分账用户餐馆分成
         $seller_get_price = $goods->seller_precent*$order->order_num;
 
-        $message = new Text(['content' => '您有一份新的订单：
-商品名称：'.$goods->name.'
-份数：'.$order->order_num.'份
-分得：'.($seller_get_price/100).'元
-位置：'.$area.'_'.$order->machine_num.'
-下单时间：
-'.$order->created_at]);
         $wechat = app('wechat');
-        $result = $wechat->staff->message($message)->to($openid)->send();
+        $notice = $wechat->notice;
+        $userId = $openid;
+        $templateId = '4FsgPHudiLwqqd8QJ1rhmob1WGq01SSdx3DJHoLWPTA';
+        $url = 'http://nnnoml.com/yangfan/public/account';
+        $data = array(
+            "first"  => "您有新的订单啦：",
+            "keyword1"  => $seller, //店铺名称
+            "keyword2"   => $order->order_id,//编号
+            "keyword3" => $goods->name.' 共'.$order->order_num.'份', //内容
+            "keyword4" => ($seller_get_price/100).'元 (分成金额)', //订单金额
+            "remark" => '配送地址：'.$buyer.'-'.$order->machine_num, //配送地址
+        );
+        $result = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
+
+//
+//
+//        //分账用户销售者分成
+//        $seller_get_price = $goods->seller_precent*$order->order_num;
+//
+//        $message = new Text(['content' => '：
+//商品名称：'.$goods->name.'
+//份数：'.$order->order_num.'份
+//分得：'.($seller_get_price/100).'元
+//位置：'.$area.'_'.$order->machine_num.'
+//下单时间：
+//'.$order->created_at]);
+//        $wechat = app('wechat');
+//        $result = $wechat->staff->message($message)->to($openid)->send();
     }
 
-    public function sendNoticeBuyer($openid,$goods,$order,$area){
-        //分账用户购买者分成
+//娱乐场所通知
+    public function sendNoticeBuyer($openid,$goods,$order,$seller,$buyer){
+        //分账用户娱乐场所分成
         $buyer_get_price = $goods->buyer_precent*$order->order_num;
-        $message = new Text(['content' => '您有一份新的订单：
-商品名称：'.$goods->name.'
-份数：'.$order->order_num.'份
-分得：'.($buyer_get_price/100).'元
-位置：'.$area.'_'.$order->machine_num.'
-下单时间：
-'.$order->created_at]);
+
         $wechat = app('wechat');
-        $result = $wechat->staff->message($message)->to($openid)->send();
+        $notice = $wechat->notice;
+        $userId = $openid;
+        $templateId = '4FsgPHudiLwqqd8QJ1rhmob1WGq01SSdx3DJHoLWPTA';
+        $url = 'http://nnnoml.com/yangfan/public/account';
+        $data = array(
+            "first"  => "新的订单分成信息：",
+            "keyword1"  => $seller, //店铺名称
+            "keyword2"   => $order->order_id,//编号
+            "keyword3" => $goods->name.' 共'.$order->order_num.'份', //内容
+            "keyword4" => ($buyer_get_price/100).'元 (分成金额)', //订单金额
+            "remark" => '配送地址：'.$buyer.'-'.$order->machine_num, //配送地址
+        );
+        $result = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
+
+//        $message = new Text(['content' => '您有一份新的订单：
+//商品名称：'.$goods->name.'
+//份数：'.$order->order_num.'份
+//分得：'.($buyer_get_price/100).'元
+//位置：'.$area.'_'.$order->machine_num.'
+//下单时间：
+//'.$order->created_at]);
+//        $wechat = app('wechat');
+//        $result = $wechat->staff->message($message)->to($openid)->send();
     }
 
-    public function customerNotice($openid,$goods,$order,$area){
-        $message = new Text(['content' => '您的订单：
-商品名称：'.$goods->name.'
-份数：'.$order->order_num.'份
-总价：'.($order->order_cash/100).'元
-位置：'.$area.'_'.$order->machine_num.'
-下单时间：
-'.$order->created_at.'
-请您稍等片刻，美味即刻送达']);
+    //用户下单微信通知
+    public function customerNotice($openid,$goods,$order,$seller,$buyer){
         $wechat = app('wechat');
-        $result = $wechat->staff->message($message)->to($openid)->send();
+        $notice = $wechat->notice;
+        $userId = $openid;
+        $templateId = '4FsgPHudiLwqqd8QJ1rhmob1WGq01SSdx3DJHoLWPTA';
+        $url = 'http://nnnoml.com/yangfan/public/user';
+        $data = array(
+            "first"  => "您的订单：",
+            "keyword1"  => $seller, //店铺名称
+            "keyword2"   => $order->order_id,//编号
+            "keyword3" => $goods->name.' 共'.$order->order_num.'份', //内容
+            "keyword4" => ($order->order_cash/100).'元', //订单金额
+            "remark" => '配送地址：'.$buyer.'-'.$order->machine_num, //配送地址
+        );
+        $result = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($userId)->send();
+
+//        $message = new Text(['content' => '您的订单：
+//商品名称：'.$goods->name.'
+//份数：'.$order->order_num.'份
+//总价：'.($order->order_cash/100).'元
+//位置：'.$area.'_'.$order->machine_num.'
+//下单时间：
+//'.$order->created_at.'
+//请您稍等片刻，美味即刻送达']);
+//        $wechat = app('wechat');
+//        $result = $wechat->staff->message($message)->to($openid)->send();
     }
 
-    public function sendYangfan($goods,$order,$area){
-        $openid = 'oSU0W1ey68ur7bUzsnQjMySOgZ1Y';
-        $message = new Text(['content' => '有订单：
-商品名称：'.$goods->name.'
-份数：'.$order->order_num.'份
-总价：'.($order->order_cash/100).'元
-位置：'.$area.'_'.$order->machine_num.'
-下单时间：
-'.$order->created_at]);
+    //杨帆龟孙通知
+    public function sendYangfan($goods,$order,$seller,$buyer){
+        $site_config = Config::getConfig();
+
         $wechat = app('wechat');
-        $result = $wechat->staff->message($message)->to($openid)->send();
+        $notice = $wechat->notice;
+        //杨帆这狗日的，openid写死在mysql配置里了，操。
+        $userId = $site_config->withdraw_notice_openid;
+        $templateId = '4FsgPHudiLwqqd8QJ1rhmob1WGq01SSdx3DJHoLWPTA';
+        $data = array(
+            "first"  => "新的订单：",
+            "keyword1"  => $seller, //店铺名称
+            "keyword2"   => $order->order_id,//编号
+            "keyword3" => $goods->name.' 共'.$order->order_num.'份', //内容
+            "keyword4" => ($order->order_cash/100).'元', //订单金额
+            "remark" => '配送地址：'.$buyer.'-'.$order->machine_num, //配送地址
+        );
+        $result = $notice->uses($templateId)->andData($data)->andReceiver($userId)->send();
+//        $message = new Text(['content' => '有订单：
+//商品名称：'.$goods->name.'
+//送餐餐馆：'.$seller_name.'
+//份数：'.$order->order_num.'份
+//总价：'.($order->order_cash/100).'元
+//位置：'.$buyer_name.'_'.$order->machine_num.'
+//下单时间：
+//'.$order->created_at]);
+//        $wechat = app('wechat');
+//        $result = $wechat->staff->message($message)->to($openid)->send();
     }
 
 
